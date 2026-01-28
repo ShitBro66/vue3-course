@@ -1,21 +1,27 @@
 <script setup lang="ts">
 import { ref, computed, reactive } from 'vue'
+import CodeComparison from '../../components/CodeComparison.vue'
 
-const author = reactive({
-  name: 'John Doe',
-  books: [
-    'Vue 2 - Advanced Guide',
-    'Vue 3 - Basic Guide',
-    'Vue 4 - The Mystery'
-  ]
+// Shopping Cart Example
+const cart = reactive([
+  { id: 1, name: 'Vue 3 Guide', price: 29.99, quantity: 1 },
+  { id: 2, name: 'TypeScript Handbook', price: 19.50, quantity: 2 }
+])
+
+const totalPrice = computed(() => {
+  return cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)
 })
 
-// 计算属性
-const publishedBooksMessage = computed(() => {
-  return author.books.length > 0 ? 'Yes' : 'No'
-})
+const addToCart = () => {
+  cart.push({ 
+    id: Date.now(), 
+    name: 'New Course', 
+    price: 49.99, 
+    quantity: 1 
+  })
+}
 
-// 可写计算属性
+// Writable Computed Example
 const firstName = ref('John')
 const lastName = ref('Doe')
 
@@ -26,50 +32,252 @@ const fullName = computed({
   set(newValue) {
     const parts = newValue.split(' ')
     firstName.value = parts[0] ?? ''
-    lastName.value = parts[1] ?? ''
+    lastName.value = parts.length > 1 ? (parts[parts.length - 1] ?? '') : ''
   }
 })
+
+const vue2Code = `export default {
+  data() {
+    return {
+      cart: [
+        { name: 'Vue 3 Guide', price: 29.99, quantity: 1 },
+        { name: 'TypeScript Handbook', price: 19.50, quantity: 2 }
+      ],
+      firstName: 'John',
+      lastName: 'Doe'
+    }
+  },
+  computed: {
+    totalPrice() {
+      return this.cart.reduce((sum, item) => {
+        return sum + item.price * item.quantity
+      }, 0).toFixed(2)
+    },
+    fullName: {
+      get() {
+        return this.firstName + ' ' + this.lastName
+      },
+      set(newValue) {
+        const parts = newValue.split(' ')
+        this.firstName = parts[0]
+        this.lastName = parts[parts.length - 1]
+      }
+    }
+  },
+  methods: {
+    addToCart() {
+      this.cart.push({ name: 'New Course', price: 49.99, quantity: 1 })
+    }
+  }
+}`
+
+const vue3Code = `import { ref, reactive, computed } from 'vue'
+
+const cart = reactive([
+  { name: 'Vue 3 Guide', price: 29.99, quantity: 1 },
+  { name: 'TypeScript Handbook', price: 19.50, quantity: 2 }
+])
+
+const totalPrice = computed(() => {
+  return cart.reduce((sum, item) => {
+    return sum + item.price * item.quantity
+  }, 0).toFixed(2)
+})
+
+const firstName = ref('John')
+const lastName = ref('Doe')
+
+const fullName = computed({
+  get() {
+    return firstName.value + ' ' + lastName.value
+  },
+  set(newValue) {
+    const parts = newValue.split(' ')
+    firstName.value = parts[0]
+    lastName.value = parts[parts.length - 1]
+  }
+})`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>计算属性 (Computed Properties) Demo</h1>
+    <h1>计算属性 (Computed Properties)</h1>
 
-    <section class="demo-section">
-      <h2>基础示例</h2>
-      <p>Has published books:</p>
-      <span>{{ publishedBooksMessage }}</span>
-    </section>
+    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+      <template #demo>
+        <div class="demo-grid">
+          <section class="demo-card">
+            <h2>购物车总价 (Read-only Computed)</h2>
+            <div class="card-content">
+              <ul class="cart-list">
+                <li v-for="item in cart" :key="item.id">
+                  <span>{{ item.name }}</span>
+                  <span class="price">\${{ item.price }} x {{ item.quantity }}</span>
+                </li>
+              </ul>
+              <div class="total-row">
+                <span>Total:</span>
+                <span class="total-price">\${{ totalPrice }}</span>
+              </div>
+              <button @click="addToCart" class="action-btn">Add Item</button>
+            </div>
+          </section>
 
-    <section class="demo-section">
-      <h2>可写计算属性 (Writable Computed)</h2>
-      <p>Full Name: {{ fullName }}</p>
-      <p>First Name: {{ firstName }}</p>
-      <p>Last Name: {{ lastName }}</p>
-      
-      <div class="input-group">
-        <label>Edit Full Name: </label>
-        <input v-model="fullName" />
-      </div>
-    </section>
+          <section class="demo-card">
+            <h2>用户信息 (Writable Computed)</h2>
+            <div class="card-content">
+              <div class="user-display">
+                <div class="avatar">{{ firstName[0] }}{{ lastName[0] }}</div>
+                <div class="user-info">
+                  <h3>{{ fullName }}</h3>
+                  <p class="text-muted">First: {{ firstName }} | Last: {{ lastName }}</p>
+                </div>
+              </div>
+              
+              <div class="input-group">
+                <label>Edit Full Name:</label>
+                <input v-model="fullName" class="custom-input" placeholder="Try editing me..." />
+              </div>
+            </div>
+          </section>
+        </div>
+      </template>
+    </CodeComparison>
   </div>
 </template>
 
 <style scoped>
 .demo-container {
   padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
-.demo-section {
-  margin-bottom: 30px;
-  border: 1px solid #eee;
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.demo-card {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
   padding: 20px;
-  border-radius: 8px;
+  background-color: var(--bg-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
-.input-group {
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  color: var(--text-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cart-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.price {
+  color: var(--text-color-secondary);
+  font-family: monospace;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 1.2rem;
   margin-top: 10px;
 }
-input {
-  padding: 5px;
-  width: 200px;
+
+.total-price {
+  color: var(--primary-color);
+}
+
+.user-display {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background-color: var(--bg-color-soft);
+  border-radius: 8px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.user-info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.text-muted {
+  margin: 5px 0 0;
+  font-size: 0.85rem;
+  color: var(--text-color-secondary);
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.custom-input {
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.custom-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(66, 184, 131, 0.2);
+}
+
+.action-btn {
+  padding: 10px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.action-btn:hover {
+  background-color: var(--primary-color-dark);
 }
 </style>
