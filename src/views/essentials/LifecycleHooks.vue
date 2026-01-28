@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { onMounted, onUpdated, onUnmounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import CodeComparison from '../../components/CodeComparison.vue'
+
+const { t } = useI18n()
 
 const count = ref(0)
 const messages = ref<string[]>([])
@@ -13,15 +16,15 @@ const addLog = (msg: string) => {
 }
 
 onMounted(() => {
-  addLog('🟢 onMounted called: Component is mounted.')
+  addLog(t('lifecycle.mounted_msg'))
 })
 
 onUpdated(() => {
-  addLog('🔵 onUpdated called: Component DOM updated.')
+  addLog(t('lifecycle.updated_msg'))
 })
 
 onUnmounted(() => {
-  console.log('🔴 onUnmounted called')
+  console.log(t('lifecycle.unmounted_msg'))
 })
 
 const vue2Code = `export default {
@@ -73,28 +76,60 @@ onUpdated(() => {
 onUnmounted(() => {
   console.log('🔴 onUnmounted called')
 })`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>Trigger Update</h2>
+    <div class="card-content">
+      <div class="counter-box">
+        <span class="count-label">Count: {{ count }}</span>
+        <button @click="count++" class="action-btn">Increment</button>
+      </div>
+      <p class="hint">Clicking increment triggers DOM update, firing <code>onUpdated</code> hook.</p>
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>Lifecycle Logs</h2>
+    <div class="card-content">
+      <div class="logs-container">
+        <ul>
+          <li v-for="(msg, index) in messages" :key="index" class="log-item">
+            {{ msg }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>生命周期钩子 (Lifecycle Hooks)</h1>
+    <h1>{{ t('lifecycle.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>Trigger Update</h2>
+            <h2>{{ t('lifecycle.trigger_update') }}</h2>
             <div class="card-content">
               <div class="counter-box">
-                <span class="count-label">Count: {{ count }}</span>
-                <button @click="count++" class="action-btn">Increment</button>
+                <span class="count-label">{{ t('lifecycle.count') }} {{ count }}</span>
+                <button @click="count++" class="action-btn">{{ t('lifecycle.increment') }}</button>
               </div>
-              <p class="hint">Clicking increment triggers DOM update, firing <code>onUpdated</code> hook.</p>
+              <p class="hint">{{ t('lifecycle.hint') }}</p>
             </div>
           </section>
 
           <section class="demo-card">
-            <h2>Lifecycle Logs</h2>
+            <h2>{{ t('lifecycle.logs') }}</h2>
             <div class="card-content">
               <div class="logs-container">
                 <ul>

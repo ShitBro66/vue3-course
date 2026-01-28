@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import CodeComparison from '../../components/CodeComparison.vue'
+
+const { t } = useI18n()
 
 const msg = ref('Hello Vue 3!')
 const rawHtml = ref('<span style="color: #f56c6c; font-weight: bold;">This text is red.</span>')
@@ -37,17 +40,73 @@ const dynamicId = ref('my-dynamic-id')
 const toggleDisabled = () => {
   isButtonDisabled.value = !isButtonDisabled.value
 }`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>Text Interpolation</h2>
+    <div class="card-content">
+      <p class="message-box">{{ msg }}</p>
+      <input v-model="msg" class="custom-input" placeholder="Edit me" />
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>Raw HTML</h2>
+    <div class="card-content">
+      <p>Using v-html directive:</p>
+      <div class="html-box" v-html="rawHtml"></div>
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>Attribute Binding</h2>
+    <div class="card-content">
+      <div :id="dynamicId" class="id-box">
+        Inspect me to see ID: <code>{{ dynamicId }}</code>
+      </div>
+      
+      <div class="button-group">
+        <button :disabled="isButtonDisabled" class="action-btn">
+          {{ isButtonDisabled ? 'Disabled' : 'Enabled' }}
+        </button>
+        <button @click="toggleDisabled" class="toggle-btn">
+          Toggle State
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>JavaScript Expressions</h2>
+    <div class="card-content">
+      <div class="expression-item">
+        <span>{{ msg }} (Reversed):</span>
+        <strong>{{ msg.split('').reverse().join('') }}</strong>
+      </div>
+      <div class="expression-item">
+        <span>ID Length + 10:</span>
+        <strong>{{ dynamicId.length + 10 }}</strong>
+      </div>
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>模板语法 (Template Syntax)</h1>
+    <h1>{{ t('template_syntax.title') }}</h1>
     
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>文本插值 (Text Interpolation)</h2>
+            <h2>{{ t('template_syntax.text_interpolation') }}</h2>
             <div class="card-content">
               <p class="message-box">{{ msg }}</p>
               <input v-model="msg" class="custom-input" placeholder="Edit me" />
@@ -55,33 +114,33 @@ const toggleDisabled = () => {
           </section>
 
           <section class="demo-card">
-            <h2>原始 HTML (Raw HTML)</h2>
+            <h2>{{ t('template_syntax.raw_html') }}</h2>
             <div class="card-content">
-              <p>Using v-html directive:</p>
+              <p>{{ t('template_syntax.using_v_html') }}</p>
               <div class="html-box" v-html="rawHtml"></div>
             </div>
           </section>
 
           <section class="demo-card">
-            <h2>Attribute 绑定</h2>
+            <h2>{{ t('template_syntax.attribute_binding') }}</h2>
             <div class="card-content">
               <div :id="dynamicId" class="id-box">
-                Inspect me to see ID: <code>{{ dynamicId }}</code>
+                {{ t('template_syntax.inspect_id') }} <code>{{ dynamicId }}</code>
               </div>
               
               <div class="button-group">
                 <button :disabled="isButtonDisabled" class="action-btn">
-                  {{ isButtonDisabled ? 'Disabled' : 'Enabled' }}
+                  {{ isButtonDisabled ? t('common.disabled') : t('common.enabled') }}
                 </button>
                 <button @click="toggleDisabled" class="toggle-btn">
-                  Toggle State
+                  {{ t('template_syntax.toggle_state') }}
                 </button>
               </div>
             </div>
           </section>
 
           <section class="demo-card">
-            <h2>JavaScript 表达式</h2>
+            <h2>{{ t('template_syntax.js_expressions') }}</h2>
             <div class="card-content">
               <div class="expression-item">
                 <span>{{ msg }} (Reversed):</span>

@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import BlogPost from '../../components/demos/BlogPost.vue'
 import CodeComparison from '../../components/CodeComparison.vue'
+
+const { t } = useI18n()
 
 const posts = ref([
   { id: 1, title: 'My journey with Vue' },
@@ -35,21 +38,48 @@ const posts = ref([
 ])
 
 const fontSize = ref(1)`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>Blog Feed</h2>
+    <div class="card-content">
+      <div class="controls">
+        <button @click="fontSize += 0.1" class="action-btn">Enlarge Text</button>
+        <button @click="fontSize -= 0.1" class="action-btn secondary">Shrink Text</button>
+      </div>
+      
+      <div class="feed" :style="{ fontSize: fontSize + 'em' }">
+        <BlogPost
+          v-for="post in posts"
+          :key="post.id"
+          :title="post.title"
+          :id="post.id"
+        />
+      </div>
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>Props Demo</h1>
+    <h1>{{ t('props.title') }}</h1>
     
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>Blog Feed</h2>
+            <h2>{{ t('props.blog_feed') }}</h2>
             <div class="card-content">
               <div class="controls">
-                <button @click="fontSize += 0.1" class="action-btn">Enlarge Text</button>
-                <button @click="fontSize -= 0.1" class="action-btn secondary">Shrink Text</button>
+                <button @click="fontSize += 0.1" class="action-btn">{{ t('props.enlarge_text') }}</button>
+                <button @click="fontSize -= 0.1" class="action-btn secondary">{{ t('props.shrink_text') }}</button>
               </div>
               
               <div class="feed" :style="{ fontSize: fontSize + 'em' }">

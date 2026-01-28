@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import CodeComparison from '../../components/CodeComparison.vue'
+
+const { t } = useI18n()
 
 const inputRef = ref<HTMLInputElement | null>(null)
 const list = ref([1, 2, 3])
@@ -37,32 +40,60 @@ onMounted(() => {
     inputRef.value.style.border = '2px solid #42b883'
   }
 })`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>Accessing Element</h2>
+    <div class="card-content">
+      <p>This input is focused on mount via <code>ref</code>:</p>
+      <input ref="inputRef" placeholder="I will be focused on mount" class="custom-input" />
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>Refs inside v-for</h2>
+    <div class="card-content">
+      <ul class="ref-list">
+        <li v-for="item in list" ref="itemRefs" :key="item" class="list-item">
+          Item {{ item }}
+        </li>
+      </ul>
+      <p class="hint">Check console for <code>itemRefs</code> array.</p>
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>模板引用 (Template Refs)</h1>
+    <h1>{{ t('template_refs.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>Accessing Element</h2>
+            <h2>{{ t('template_refs.accessing_element') }}</h2>
             <div class="card-content">
-              <p>This input is focused on mount via <code>ref</code>:</p>
-              <input ref="inputRef" placeholder="I will be focused on mount" class="custom-input" />
+              <p>{{ t('template_refs.focus_desc') }}</p>
+              <input ref="inputRef" :placeholder="t('template_refs.input_placeholder')" class="custom-input" />
             </div>
           </section>
 
           <section class="demo-card">
-            <h2>Refs inside v-for</h2>
+            <h2>{{ t('template_refs.refs_inside_vfor') }}</h2>
             <div class="card-content">
               <ul class="ref-list">
                 <li v-for="item in list" ref="itemRefs" :key="item" class="list-item">
-                  Item {{ item }}
+                  {{ t('template_refs.item') }} {{ item }}
                 </li>
               </ul>
-              <p class="hint">Check console for <code>itemRefs</code> array.</p>
+              <p class="hint">{{ t('template_refs.console_hint') }}</p>
             </div>
           </section>
         </div>

@@ -1,10 +1,22 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import CodeComparison from '../../components/CodeComparison.vue'
 
+const { t } = useI18n()
 const show = ref(true)
 
-const vue2Code = `<transition name="fade">
+const vue2Code = `<script>
+export default {
+  data() {
+    return {
+      show: true
+    }
+  }
+}
+<\/script>`
+
+const vue2Template = `<transition name="fade">
   <p v-if="show">hello</p>
 </transition>
 
@@ -18,7 +30,12 @@ const vue2Code = `<transition name="fade">
 }
 </style>`
 
-const vue3Code = `<Transition name="fade">
+const vue3Code = `<script setup>
+import { ref } from 'vue'
+const show = ref(true)
+<\/script>`
+
+const vue3Template = `<Transition name="fade">
   <p v-if="show">hello</p>
 </Transition>
 
@@ -35,30 +52,35 @@ const vue3Code = `<Transition name="fade">
 
 <template>
   <div class="demo-container">
-    <h1>Transition Demo</h1>
+    <h1>{{ t('transition.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="vue2Template"
+      :vue3-template="vue3Template"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>CSS Transitions</h2>
+            <h2>{{ t('transition.css_transitions') }}</h2>
             <div class="card-content centered">
               <button @click="show = !show" class="action-btn">
-                Toggle Transitions
+                {{ t('transition.toggle') }}
               </button>
               
               <div class="transition-area">
                 <div class="transition-box">
-                  <h3>Fade</h3>
+                  <h3>{{ t('transition.fade') }}</h3>
                   <Transition name="fade">
-                    <p v-if="show" class="box">Fade Me</p>
+                    <p v-if="show" class="box">{{ t('transition.fade_me') }}</p>
                   </Transition>
                 </div>
 
                 <div class="transition-box">
-                  <h3>Slide Fade</h3>
+                  <h3>{{ t('transition.slide_fade') }}</h3>
                   <Transition name="slide-fade">
-                    <p v-if="show" class="box secondary">Slide Me</p>
+                    <p v-if="show" class="box secondary">{{ t('transition.slide_me') }}</p>
                   </Transition>
                 </div>
               </div>

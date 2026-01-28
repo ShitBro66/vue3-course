@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import CodeComparison from '../../components/CodeComparison.vue'
+
+const { t } = useI18n()
 
 const count = ref(0)
 const name = ref('Vue.js')
@@ -65,56 +68,108 @@ function warn(message: string, event: Event) {
   }
   lastLog.value = \`Warning: \${message}\`
 }`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>Inline Handlers</h2>
+    <div class="card-content">
+      <div class="counter-display">
+        <span>Count: {{ count }}</span>
+        <button @click="count++" class="action-btn">Add 1</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>Method Handlers</h2>
+    <div class="card-content">
+      <button @click="greet" class="action-btn">Greet (Alert)</button>
+      <div class="button-group">
+        <button @click="say('hello')" class="action-btn secondary">Say hello</button>
+        <button @click="say('bye')" class="action-btn secondary">Say bye</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>Event Modifiers</h2>
+    <div class="card-content">
+      <div @click="say('div clicked')" class="clickable-area">
+        <p>Div Area (Click me)</p>
+        <button @click.stop="say('button clicked (propagation stopped)')" class="action-btn accent">
+          Button (Stop Prop)
+        </button>
+      </div>
+      
+      <form @submit.prevent="warn('Form submitted!', $event)" class="inline-form">
+        <button type="submit" class="action-btn">Submit (Prevent Default)</button>
+      </form>
+    </div>
+  </section>
+  
+  <section class="demo-card full-width">
+    <h2>Event Log</h2>
+    <div class="log-box">
+      {{ lastLog || 'Interact with buttons above to see logs...' }}
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>事件处理 (Event Handling)</h1>
+    <h1>{{ t('events.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>Inline Handlers</h2>
+            <h2>{{ t('events.inline_handlers') }}</h2>
             <div class="card-content">
               <div class="counter-display">
-                <span>Count: {{ count }}</span>
-                <button @click="count++" class="action-btn">Add 1</button>
+                <span>{{ t('events.count') }} {{ count }}</span>
+                <button @click="count++" class="action-btn">{{ t('events.add_1') }}</button>
               </div>
             </div>
           </section>
 
           <section class="demo-card">
-            <h2>Method Handlers</h2>
+            <h2>{{ t('events.method_handlers') }}</h2>
             <div class="card-content">
-              <button @click="greet" class="action-btn">Greet (Alert)</button>
+              <button @click="greet" class="action-btn">{{ t('events.greet_alert') }}</button>
               <div class="button-group">
-                <button @click="say('hello')" class="action-btn secondary">Say hello</button>
-                <button @click="say('bye')" class="action-btn secondary">Say bye</button>
+                <button @click="say('hello')" class="action-btn secondary">{{ t('events.say_hello') }}</button>
+                <button @click="say('bye')" class="action-btn secondary">{{ t('events.say_bye') }}</button>
               </div>
             </div>
           </section>
 
           <section class="demo-card">
-            <h2>Event Modifiers</h2>
+            <h2>{{ t('events.event_modifiers') }}</h2>
             <div class="card-content">
               <div @click="say('div clicked')" class="clickable-area">
-                <p>Div Area (Click me)</p>
+                <p>{{ t('events.div_area') }}</p>
                 <button @click.stop="say('button clicked (propagation stopped)')" class="action-btn accent">
-                  Button (Stop Prop)
+                  {{ t('events.stop_prop') }}
                 </button>
               </div>
               
               <form @submit.prevent="warn('Form submitted!', $event)" class="inline-form">
-                <button type="submit" class="action-btn">Submit (Prevent Default)</button>
+                <button type="submit" class="action-btn">{{ t('events.prevent_default') }}</button>
               </form>
             </div>
           </section>
           
           <section class="demo-card full-width">
-            <h2>Event Log</h2>
+            <h2>{{ t('events.event_log') }}</h2>
             <div class="log-box">
-              {{ lastLog || 'Interact with buttons above to see logs...' }}
+              {{ lastLog || t('events.log_placeholder') }}
             </div>
           </section>
         </div>

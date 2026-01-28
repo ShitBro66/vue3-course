@@ -10,7 +10,277 @@
     "built_ins": "Built-in Components",
     "ecosystem": "Ecosystem",
     "toggle_theme": "Toggle Theme",
-    "language": "Language"
+    "language": "Language",
+    "disabled": "Disabled",
+    "enabled": "Enabled"
+  },
+  "template_syntax": {
+    "title": "Template Syntax",
+    "text_interpolation": "Text Interpolation",
+    "raw_html": "Raw HTML",
+    "using_v_html": "Using v-html directive:",
+    "attribute_binding": "Attribute Binding",
+    "inspect_id": "Inspect me to see ID:",
+    "js_expressions": "JavaScript Expressions",
+    "toggle_state": "Toggle State"
+  },
+  "reactivity": {
+    "title": "Reactivity Fundamentals",
+    "ref_counter": "ref() Basic Counter",
+    "reactive_state": "reactive() Object State",
+    "deep_reactivity": "Deep Reactivity",
+    "increment_ref": "Increment Ref",
+    "increment_reactive": "Increment Reactive",
+    "mutate_deeply": "Mutate Deeply",
+    "nested_count": "Nested Count:",
+    "array": "Array:"
+  },
+  "computed": {
+    "title": "Computed Properties",
+    "shopping_cart": "Basic Computed (Shopping Cart)",
+    "writable": "Writable Computed",
+    "total_price": "Total Price:",
+    "add_item": "Add Item",
+    "full_name": "Full Name:"
+  },
+  "class_style": {
+    "title": "Class and Style Bindings",
+    "class_binding": "Class Binding",
+    "style_binding": "Style Binding",
+    "inline_object": "Inline Object Binding",
+    "computed_object": "Computed Object Binding",
+    "toggle_active": "Toggle Active",
+    "toggle_error": "Toggle Error",
+    "bound_style": "Bound Style"
+  },
+  "conditional": {
+    "title": "Conditional Rendering",
+    "toggle_mood": "Toggle Mood",
+    "cycle_type": "Cycle Type",
+    "hide_details": "Hide Details",
+    "show_details": "Show Details",
+    "awesome_text": "🎉 Vue is Awesome!",
+    "oh_no_text": "😢 Oh no",
+    "type_a": "Type A",
+    "type_b": "Type B",
+    "type_c": "Type C",
+    "not_type": "Not A/B/C",
+    "v_show_desc": "v-show toggles CSS display property.",
+    "always_in_dom": "✨ These details are always in DOM!",
+    "inspect_verify": "Inspect element to verify."
+  },
+  "list": {
+    "title": "List Rendering",
+    "todo_list": "Todo List (v-for)",
+    "add_placeholder": "Add a new task...",
+    "add_btn": "Add",
+    "items_left": "items left",
+    "object_loop": "Object Loop",
+    "range_loop": "Range Loop (Pagination UI)"
+  },
+  "events": {
+    "title": "Event Handling",
+    "inline_handlers": "Inline Handlers",
+    "count": "Count:",
+    "add_1": "Add 1",
+    "method_handlers": "Method Handlers",
+    "greet_alert": "Greet (Alert)",
+    "say_hello": "Say hello",
+    "say_bye": "Say bye",
+    "event_modifiers": "Event Modifiers",
+    "div_area": "Div Area (Click me)",
+    "stop_prop": "Button (Stop Prop)",
+    "prevent_default": "Submit (Prevent Default)",
+    "event_log": "Event Log",
+    "log_placeholder": "Interact with buttons above to see logs..."
+  },
+  "form": {
+    "title": "Form Input Bindings",
+    "text_input": "Text Input",
+    "message_label": "Message:",
+    "multiline_text": "Multiline Text",
+    "add_multiple_lines": "Add multiple lines",
+    "preview_label": "Preview:",
+    "checkboxes": "Checkboxes",
+    "checked_label": "Checked:",
+    "names_label": "Names:",
+    "radio_buttons": "Radio Buttons",
+    "picked_label": "Picked:",
+    "select": "Select",
+    "select_placeholder": "Please select one",
+    "selected_label": "Selected:",
+    "modifiers": "Modifiers (.lazy)",
+    "sync_label": "Sync after change (unfocus):",
+    "value_label": "Value:"
+  },
+  "lifecycle": {
+    "title": "Lifecycle Hooks",
+    "trigger_update": "Trigger Update",
+    "count": "Count:",
+    "increment": "Increment",
+    "hint": "Clicking increment triggers DOM update, firing onUpdated hook.",
+    "logs": "Lifecycle Logs",
+    "mounted_msg": "🟢 onMounted called: Component is mounted.",
+    "updated_msg": "🔵 onUpdated called: Component DOM updated.",
+    "unmounted_msg": "🔴 onUnmounted called"
+  },
+  "watchers": {
+    "title": "Watchers",
+    "async_api": "watch() - Async API",
+    "ask_question": "Ask a yes/no question:",
+    "placeholder": "e.g., Is Vue awesome?",
+    "thinking": "Thinking...",
+    "default_answer": "Questions usually contain a question mark. ;-)",
+    "error_api": "Error! Could not reach the API.",
+    "side_effects": "watchEffect() - Side Effects",
+    "count": "Count:",
+    "double": "Double:",
+    "increment": "Increment",
+    "log_msg": "Side effect: Count is {count}, Double is {double}"
+  },
+  "template_refs": {
+    "title": "Template Refs",
+    "accessing_element": "Accessing Element",
+    "focus_desc": "This input is focused on mount via ref:",
+    "input_placeholder": "I will be focused on mount",
+    "refs_inside_vfor": "Refs inside v-for",
+    "item": "Item",
+    "console_hint": "Check console for itemRefs array."
+  },
+  "component_basics": {
+    "title": "Component Basics",
+    "desc": "Here is a child component used 3 times:",
+    "state_desc": "Each component maintains its own state."
+  },
+  "registration": {
+    "title": "Component Registration",
+    "types": "Registration Types",
+    "global": "Global Registration",
+    "global_desc": "Components registered globally can be used in the template of any component within the application.",
+    "local": "Local Registration",
+    "local_desc": "Components registered locally are only available in the component where they are registered.",
+    "local_hint": "In <script setup>, imported components are locally registered automatically!",
+    "demo_list": "Demo List (Using Local Component)"
+  },
+  "props": {
+    "title": "Props Demo",
+    "blog_feed": "Blog Feed",
+    "enlarge_text": "Enlarge Text",
+    "shrink_text": "Shrink Text"
+  },
+  "component_events": {
+    "title": "Component Events",
+    "counter_event": "Counter Event",
+    "click_hint": "Click buttons in children to emit events:"
+  },
+  "vmodel": {
+    "title": "v-model Demo",
+    "two_way_binding": "Two-way Binding",
+    "parent_message": "Parent Message:",
+    "custom_input": "Custom Input (Child):",
+    "vue3_note": "In Vue 3, v-model defaults to using modelValue prop and update:modelValue event."
+  },
+  "attrs": {
+    "title": "Fallthrough Attributes",
+    "auto_inheritance": "Automatic Inheritance",
+    "desc": "The button below receives class=\"large-btn\" and @click handler from the parent, even though they are not defined as props.",
+    "note": "Inspect the button element to see the applied class."
+  },
+  "slots": {
+    "title": "Slots Demo",
+    "default": "Default Slot",
+    "click_me": "Click me!",
+    "with_icon": "Slot with Icon",
+    "launch": "Launch",
+    "fallback": "Fallback Content"
+  },
+  "provide_inject": {
+    "title": "Provide / Inject",
+    "tree": "Component Tree",
+    "parent": "Parent (Provider)",
+    "count": "Count:",
+    "increment": "Increment",
+    "passes": "↓ passes data deeply ↓"
+  },
+  "async": {
+    "title": "Async Components",
+    "lazy_demo": "Lazy Loading Demo",
+    "desc": "Click the button to load the component asynchronously. It has a 2-second artificial delay to show the loading state.",
+    "hide": "Hide",
+    "show": "Show",
+    "component": "Async Component"
+  },
+  "composables": {
+    "title": "Composables",
+    "mouse_tracker": "Mouse Position Tracker",
+    "x_pos": "X:",
+    "y_pos": "Y:",
+    "desc": "Move your mouse around to see the coordinates update. This logic is reused via the useMouse composable."
+  },
+  "directives": {
+    "title": "Custom Directives",
+    "focus_demo": "v-focus Demo",
+    "focus_desc": "The input below is automatically focused on page load.",
+    "focus_placeholder": "I will be focused automatically",
+    "color_demo": "v-color Demo",
+    "color_green": "This text is colored Green (#42b883) by a directive.",
+    "color_blue": "This text is colored Blue (#35495e) by a directive.",
+    "color_red": "This text is colored Red (#ff6b6b) by a directive."
+  },
+  "plugins": {
+    "title": "Plugins",
+    "active_plugins": "Active Plugins",
+    "desc": "Plugins are self-contained code that usually add global-level functionality to Vue.",
+    "router_desc": "Routing",
+    "pinia_desc": "State Management",
+    "i18n_desc": "Internationalization",
+    "example_info": "Example: vue-i18n plugin provides global $t function or useI18n composable."
+  },
+  "keep_alive": {
+    "title": "KeepAlive Demo",
+    "cached_components": "Cached Components",
+    "comp_a": "Component A",
+    "comp_b": "Component B",
+    "hint": "Switch between components. Type something in the input, then switch away and back. Notice the state is preserved!"
+  },
+  "suspense": {
+    "title": "Suspense Demo",
+    "orchestrating": "Orchestrating Async Components",
+    "desc": "Suspense handles async dependencies in the component tree. Reload the component to see the loading state again.",
+    "waiting": "Waiting for async component..."
+  },
+  "teleport": {
+    "title": "Teleport Demo",
+    "to_body": "Portal to Body",
+    "desc": "Clicking the button will render the modal as a direct child of <body>, breaking out of the component's DOM hierarchy.",
+    "open_modal": "Open Modal",
+    "modal_title": "I am a Teleported Modal!",
+    "modal_content": "My parent component is deep in the DOM tree, but I am rendered directly under body.",
+    "close": "Close"
+  },
+  "transition": {
+    "title": "Transition Demo",
+    "css_transitions": "CSS Transitions",
+    "toggle": "Toggle Transitions",
+    "fade": "Fade",
+    "fade_me": "Fade Me",
+    "slide_fade": "Slide Fade",
+    "slide_me": "Slide Me"
+  },
+  "transition_group": {
+    "title": "TransitionGroup Demo",
+    "list_transitions": "List Transitions",
+    "add_item": "Add Item",
+    "remove_item": "Remove Item"
+  },
+  "pinia": {
+    "title": "Pinia State Management",
+    "intro": "This is a counter example using Pinia for state management.",
+    "count": "Count:",
+    "double_count": "Double Count (Getter):",
+    "increment": "Increment",
+    "reset": "Reset",
+    "persistence_hint": "Try switching to other pages and coming back, you'll see the state is preserved (unless you refresh the page)."
   },
   "menu": {
     "essentials": "Essentials",

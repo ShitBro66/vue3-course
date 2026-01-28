@@ -10,7 +10,277 @@
     "built_ins": "内置组件",
     "ecosystem": "生态系统 (Vue Router, Pinia)",
     "toggle_theme": "切换主题",
-    "language": "语言"
+    "language": "语言",
+    "disabled": "禁用",
+    "enabled": "启用"
+  },
+  "template_syntax": {
+    "title": "模板语法 (Template Syntax)",
+    "text_interpolation": "文本插值 (Text Interpolation)",
+    "raw_html": "原始 HTML (Raw HTML)",
+    "using_v_html": "使用 v-html 指令:",
+    "attribute_binding": "Attribute 绑定",
+    "inspect_id": "检查元素 ID:",
+    "js_expressions": "JavaScript 表达式",
+    "toggle_state": "切换状态"
+  },
+  "reactivity": {
+    "title": "响应式基础 (Reactivity Fundamentals)",
+    "ref_counter": "ref() 基础计数器",
+    "reactive_state": "reactive() 对象状态",
+    "deep_reactivity": "深层响应性 (Deep Reactivity)",
+    "increment_ref": "增加 Ref",
+    "increment_reactive": "增加 Reactive",
+    "mutate_deeply": "深层修改",
+    "nested_count": "嵌套计数:",
+    "array": "数组:"
+  },
+  "computed": {
+    "title": "计算属性 (Computed Properties)",
+    "shopping_cart": "基础计算属性 (Shopping Cart)",
+    "writable": "可写计算属性 (Writable Computed)",
+    "total_price": "总价:",
+    "add_item": "添加商品",
+    "full_name": "全名:"
+  },
+  "class_style": {
+    "title": "类与样式绑定 (Class and Style Bindings)",
+    "class_binding": "Class 绑定",
+    "style_binding": "Style 绑定",
+    "inline_object": "内联对象绑定",
+    "computed_object": "计算对象绑定",
+    "toggle_active": "切换 Active",
+    "toggle_error": "切换 Error",
+    "bound_style": "样式绑定效果"
+  },
+  "conditional": {
+    "title": "条件渲染 (Conditional Rendering)",
+    "toggle_mood": "切换心情",
+    "cycle_type": "切换类型",
+    "hide_details": "隐藏详情",
+    "show_details": "显示详情",
+    "awesome_text": "🎉 Vue 真棒！",
+    "oh_no_text": "😢 噢不",
+    "type_a": "类型 A",
+    "type_b": "类型 B",
+    "type_c": "类型 C",
+    "not_type": "非 A/B/C",
+    "v_show_desc": "v-show 切换 CSS display 属性。",
+    "always_in_dom": "✨ 这些详情一直在 DOM 中！",
+    "inspect_verify": "检查元素以验证。"
+  },
+  "list": {
+    "title": "列表渲染 (List Rendering)",
+    "todo_list": "待办事项列表 (v-for)",
+    "add_placeholder": "添加新任务...",
+    "add_btn": "添加",
+    "items_left": "剩余项目",
+    "object_loop": "对象遍历",
+    "range_loop": "范围遍历 (分页 UI)"
+  },
+  "events": {
+    "title": "事件处理 (Event Handling)",
+    "inline_handlers": "内联处理器",
+    "count": "计数:",
+    "add_1": "加 1",
+    "method_handlers": "方法处理器",
+    "greet_alert": "问候 (Alert)",
+    "say_hello": "说 Hello",
+    "say_bye": "说 Bye",
+    "event_modifiers": "事件修饰符",
+    "div_area": "Div 区域 (点击我)",
+    "stop_prop": "按钮 (停止冒泡)",
+    "prevent_default": "提交 (阻止默认行为)",
+    "event_log": "事件日志",
+    "log_placeholder": "与上方按钮交互以查看日志..."
+  },
+  "form": {
+    "title": "表单输入绑定 (Form Input Bindings)",
+    "text_input": "文本输入",
+    "message_label": "消息:",
+    "multiline_text": "多行文本",
+    "add_multiple_lines": "添加多行文本",
+    "preview_label": "预览:",
+    "checkboxes": "复选框",
+    "checked_label": "已选中:",
+    "names_label": "名字:",
+    "radio_buttons": "单选按钮",
+    "picked_label": "已选:",
+    "select": "选择器",
+    "select_placeholder": "请选择一个",
+    "selected_label": "已选:",
+    "modifiers": "修饰符 (.lazy)",
+    "sync_label": "更改后同步 (失焦):",
+    "value_label": "值:"
+  },
+  "lifecycle": {
+    "title": "生命周期钩子 (Lifecycle Hooks)",
+    "trigger_update": "触发更新",
+    "count": "计数:",
+    "increment": "增加",
+    "hint": "点击增加会触发 DOM 更新，从而触发 onUpdated 钩子。",
+    "logs": "生命周期日志",
+    "mounted_msg": "🟢 onMounted 调用: 组件已挂载。",
+    "updated_msg": "🔵 onUpdated 调用: 组件 DOM 已更新。",
+    "unmounted_msg": "🔴 onUnmounted 调用"
+  },
+  "watchers": {
+    "title": "侦听器 (Watchers)",
+    "async_api": "watch() - 异步 API",
+    "ask_question": "问一个 是/否 问题:",
+    "placeholder": "例如: Vue 好用吗？",
+    "thinking": "思考中...",
+    "default_answer": "问题通常包含问号。;-)",
+    "error_api": "错误！无法访问 API。",
+    "side_effects": "watchEffect() - 副作用",
+    "count": "计数:",
+    "double": "双倍:",
+    "increment": "增加",
+    "log_msg": "副作用: 计数是 {count}, 双倍是 {double}"
+  },
+  "template_refs": {
+    "title": "模板引用 (Template Refs)",
+    "accessing_element": "访问元素",
+    "focus_desc": "此输入框在挂载时通过 ref 聚焦:",
+    "input_placeholder": "挂载时我会自动聚焦",
+    "refs_inside_vfor": "v-for 中的 Refs",
+    "item": "项目",
+    "console_hint": "查看控制台中的 itemRefs 数组。"
+  },
+  "component_basics": {
+    "title": "组件基础 (Component Basics)",
+    "desc": "这是一个被复用 3 次的子组件:",
+    "state_desc": "每个组件维护自己的状态。"
+  },
+  "registration": {
+    "title": "组件注册 (Component Registration)",
+    "types": "注册类型",
+    "global": "全局注册",
+    "global_desc": "全局注册的组件可以在应用内任何组件的模板中使用。",
+    "local": "局部注册",
+    "local_desc": "局部注册的组件仅在注册它们的组件中可用。",
+    "local_hint": "在 <script setup> 中，导入的组件会自动进行局部注册！",
+    "demo_list": "演示列表 (使用局部组件)"
+  },
+  "props": {
+    "title": "Props 演示",
+    "blog_feed": "博客信息流",
+    "enlarge_text": "放大文本",
+    "shrink_text": "缩小文本"
+  },
+  "component_events": {
+    "title": "组件事件 (Component Events)",
+    "counter_event": "计数器事件",
+    "click_hint": "点击子组件中的按钮以触发事件:"
+  },
+  "vmodel": {
+    "title": "v-model 演示",
+    "two_way_binding": "双向绑定",
+    "parent_message": "父组件消息:",
+    "custom_input": "自定义输入 (子组件):",
+    "vue3_note": "在 Vue 3 中，v-model 默认使用 modelValue prop 和 update:modelValue 事件。"
+  },
+  "attrs": {
+    "title": "透传 Attributes (Fallthrough Attributes)",
+    "auto_inheritance": "自动继承",
+    "desc": "下面的按钮从父组件接收 class=\"large-btn\" 和 @click 处理器，即使它们没有被定义为 props。",
+    "note": "检查按钮元素以查看应用的类。"
+  },
+  "slots": {
+    "title": "插槽 (Slots) 演示",
+    "default": "默认插槽",
+    "click_me": "点我!",
+    "with_icon": "带图标的插槽",
+    "launch": "发射",
+    "fallback": "后备内容"
+  },
+  "provide_inject": {
+    "title": "依赖注入 (Provide / Inject)",
+    "tree": "组件树",
+    "parent": "父组件 (提供者)",
+    "count": "计数:",
+    "increment": "增加",
+    "passes": "↓ 深度传递数据 ↓"
+  },
+  "async": {
+    "title": "异步组件 (Async Components)",
+    "lazy_demo": "懒加载演示",
+    "desc": "点击按钮以异步加载组件。它有 2 秒的人为延迟以展示加载状态。",
+    "hide": "隐藏",
+    "show": "显示",
+    "component": "异步组件"
+  },
+  "composables": {
+    "title": "组合式函数 (Composables)",
+    "mouse_tracker": "鼠标位置追踪器",
+    "x_pos": "X:",
+    "y_pos": "Y:",
+    "desc": "移动鼠标查看坐标更新。此逻辑通过 useMouse 组合式函数复用。"
+  },
+  "directives": {
+    "title": "自定义指令 (Custom Directives)",
+    "focus_demo": "v-focus 演示",
+    "focus_desc": "下面的输入框在页面加载时自动聚焦。",
+    "focus_placeholder": "我会自动聚焦",
+    "color_demo": "v-color 演示",
+    "color_green": "这段文字被指令染成绿色 (#42b883)。",
+    "color_blue": "这段文字被指令染成蓝色 (#35495e)。",
+    "color_red": "这段文字被指令染成红色 (#ff6b6b)。"
+  },
+  "plugins": {
+    "title": "插件 (Plugins)",
+    "active_plugins": "已激活插件",
+    "desc": "插件通常为 Vue 添加全局功能。",
+    "router_desc": "路由",
+    "pinia_desc": "状态管理",
+    "i18n_desc": "国际化",
+    "example_info": "例如: vue-i18n 插件提供了全局 $t 函数或 useI18n 组合式函数。"
+  },
+  "keep_alive": {
+    "title": "KeepAlive 演示",
+    "cached_components": "缓存组件",
+    "comp_a": "组件 A",
+    "comp_b": "组件 B",
+    "hint": "在组件间切换。在输入框中输入内容，然后切走再切回来。注意状态被保留了！"
+  },
+  "suspense": {
+    "title": "Suspense 演示",
+    "orchestrating": "编排异步组件",
+    "desc": "Suspense 处理组件树中的异步依赖。重新加载组件以再次查看加载状态。",
+    "waiting": "等待异步组件..."
+  },
+  "teleport": {
+    "title": "Teleport 演示",
+    "to_body": "传送至 Body",
+    "desc": "点击按钮将模态框渲染为 <body> 的直接子元素，跳出组件的 DOM 层级。",
+    "open_modal": "打开模态框",
+    "modal_title": "我是被传送的模态框！",
+    "modal_content": "我的父组件在 DOM 树深处，但我直接渲染在 body 下。",
+    "close": "关闭"
+  },
+  "transition": {
+    "title": "过渡动画 (Transition)",
+    "css_transitions": "CSS 过渡",
+    "toggle": "切换过渡",
+    "fade": "渐变 (Fade)",
+    "fade_me": "渐变我",
+    "slide_fade": "滑动渐变 (Slide Fade)",
+    "slide_me": "滑动我"
+  },
+  "transition_group": {
+    "title": "列表过渡 (TransitionGroup)",
+    "list_transitions": "列表过渡",
+    "add_item": "添加项目",
+    "remove_item": "移除项目"
+  },
+  "pinia": {
+    "title": "Pinia 状态管理",
+    "intro": "这是一个使用 Pinia 管理状态的计数器示例。",
+    "count": "计数:",
+    "double_count": "双倍计数 (Getter):",
+    "increment": "增加",
+    "reset": "重置",
+    "persistence_hint": "你可以尝试切换到其他页面再回来，你会发现状态是被保留的（除非刷新页面）。"
   },
   "menu": {
     "essentials": "基础 (Essentials)",

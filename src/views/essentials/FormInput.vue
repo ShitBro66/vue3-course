@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import CodeComparison from '../../components/CodeComparison.vue'
+
+const { t } = useI18n()
 
 const message = ref('')
 const multilineMessage = ref('')
@@ -36,44 +39,157 @@ const picked = ref('')
 const selected = ref('')
 const multiSelected = ref([])
 const lazyMsg = ref('')`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>Text Input</h2>
+    <div class="card-content">
+      <input v-model="message" placeholder="Edit me" class="custom-input" />
+      <div class="result-box">
+        <span class="label">Message:</span>
+        <span class="value">{{ message || '(empty)' }}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>Multiline Text</h2>
+    <div class="card-content">
+      <textarea v-model="multilineMessage" placeholder="Add multiple lines" class="custom-input"></textarea>
+      <div class="result-box multiline">
+        <span class="label">Preview:</span>
+        <pre class="value">{{ multilineMessage || '(empty)' }}</pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>Checkboxes</h2>
+    <div class="card-content">
+      <div class="checkbox-group">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="checkbox" v-model="checked" />
+          <span>Checked: {{ checked }}</span>
+        </label>
+      </div>
+      
+      <div class="divider"></div>
+      
+      <div class="checkbox-group">
+        <label class="custom-checkbox">
+          <input type="checkbox" value="Jack" v-model="checkedNames" />
+          <span>Jack</span>
+        </label>
+        <label class="custom-checkbox">
+          <input type="checkbox" value="John" v-model="checkedNames" />
+          <span>John</span>
+        </label>
+        <label class="custom-checkbox">
+          <input type="checkbox" value="Mike" v-model="checkedNames" />
+          <span>Mike</span>
+        </label>
+      </div>
+      <div class="result-box">
+        <span class="label">Names:</span>
+        <span class="value">{{ checkedNames }}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>Radio Buttons</h2>
+    <div class="card-content">
+      <div class="radio-group">
+        <label class="custom-radio">
+          <input type="radio" value="One" v-model="picked" />
+          <span>One</span>
+        </label>
+        <label class="custom-radio">
+          <input type="radio" value="Two" v-model="picked" />
+          <span>Two</span>
+        </label>
+      </div>
+      <div class="result-box">
+        <span class="label">Picked:</span>
+        <span class="value">{{ picked || '(none)' }}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>Select</h2>
+    <div class="card-content">
+      <select v-model="selected" class="custom-select">
+        <option disabled value="">Please select one</option>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+      </select>
+      <div class="result-box">
+        <span class="label">Selected:</span>
+        <span class="value">{{ selected || '(none)' }}</span>
+      </div>
+    </div>
+  </section>
+  
+  <section class="demo-card">
+    <h2>Modifiers (.lazy)</h2>
+    <div class="card-content">
+      <div class="input-group">
+        <label>Sync after change (unfocus):</label>
+        <input v-model.lazy="lazyMsg" class="custom-input" />
+      </div>
+      <div class="result-box">
+        <span class="label">Value:</span>
+        <span class="value">{{ lazyMsg || '(empty)' }}</span>
+      </div>
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>表单输入绑定 (Form Input Bindings)</h1>
+    <h1>{{ t('form.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>Text Input</h2>
+            <h2>{{ t('form.text_input') }}</h2>
             <div class="card-content">
               <input v-model="message" placeholder="Edit me" class="custom-input" />
               <div class="result-box">
-                <span class="label">Message:</span>
+                <span class="label">{{ t('form.message_label') }}</span>
                 <span class="value">{{ message || '(empty)' }}</span>
               </div>
             </div>
           </section>
 
           <section class="demo-card">
-            <h2>Multiline Text</h2>
+            <h2>{{ t('form.multiline_text') }}</h2>
             <div class="card-content">
-              <textarea v-model="multilineMessage" placeholder="Add multiple lines" class="custom-input"></textarea>
+              <textarea v-model="multilineMessage" :placeholder="t('form.add_multiple_lines')" class="custom-input"></textarea>
               <div class="result-box multiline">
-                <span class="label">Preview:</span>
+                <span class="label">{{ t('form.preview_label') }}</span>
                 <pre class="value">{{ multilineMessage || '(empty)' }}</pre>
               </div>
             </div>
           </section>
 
           <section class="demo-card">
-            <h2>Checkboxes</h2>
+            <h2>{{ t('form.checkboxes') }}</h2>
             <div class="card-content">
               <div class="checkbox-group">
                 <label class="custom-checkbox">
                   <input type="checkbox" id="checkbox" v-model="checked" />
-                  <span>Checked: {{ checked }}</span>
+                  <span>{{ t('form.checked_label') }} {{ checked }}</span>
                 </label>
               </div>
               
@@ -94,14 +210,14 @@ const lazyMsg = ref('')`
                 </label>
               </div>
               <div class="result-box">
-                <span class="label">Names:</span>
+                <span class="label">{{ t('form.names_label') }}</span>
                 <span class="value">{{ checkedNames }}</span>
               </div>
             </div>
           </section>
 
           <section class="demo-card">
-            <h2>Radio Buttons</h2>
+            <h2>{{ t('form.radio_buttons') }}</h2>
             <div class="card-content">
               <div class="radio-group">
                 <label class="custom-radio">
@@ -114,37 +230,37 @@ const lazyMsg = ref('')`
                 </label>
               </div>
               <div class="result-box">
-                <span class="label">Picked:</span>
+                <span class="label">{{ t('form.picked_label') }}</span>
                 <span class="value">{{ picked || '(none)' }}</span>
               </div>
             </div>
           </section>
 
           <section class="demo-card">
-            <h2>Select</h2>
+            <h2>{{ t('form.select') }}</h2>
             <div class="card-content">
               <select v-model="selected" class="custom-select">
-                <option disabled value="">Please select one</option>
+                <option disabled value="">{{ t('form.select_placeholder') }}</option>
                 <option>A</option>
                 <option>B</option>
                 <option>C</option>
               </select>
               <div class="result-box">
-                <span class="label">Selected:</span>
+                <span class="label">{{ t('form.selected_label') }}</span>
                 <span class="value">{{ selected || '(none)' }}</span>
               </div>
             </div>
           </section>
           
           <section class="demo-card">
-            <h2>Modifiers (.lazy)</h2>
+            <h2>{{ t('form.modifiers') }}</h2>
             <div class="card-content">
               <div class="input-group">
-                <label>Sync after change (unfocus):</label>
+                <label>{{ t('form.sync_label') }}</label>
                 <input v-model.lazy="lazyMsg" class="custom-input" />
               </div>
               <div class="result-box">
-                <span class="label">Value:</span>
+                <span class="label">{{ t('form.value_label') }}</span>
                 <span class="value">{{ lazyMsg || '(empty)' }}</span>
               </div>
             </div>

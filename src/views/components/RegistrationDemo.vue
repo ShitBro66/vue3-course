@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import CodeComparison from '../../components/CodeComparison.vue'
+
+const { t } = useI18n()
 
 const items = ref([
   { id: 1, name: 'Vue' },
@@ -33,31 +36,64 @@ app.component('MyComponent', MyComponent)
 import MyComponent from './MyComponent.vue'
 // Imported components are automatically registered
 // in <script setup>`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>Registration Types</h2>
+    <div class="card-content">
+      <div class="info-box">
+        <h3>Global Registration</h3>
+        <p>Components registered globally can be used in the template of any component within the application.</p>
+      </div>
+      
+      <div class="info-box">
+        <h3>Local Registration</h3>
+        <p>Components registered locally are only available in the component where they are registered.</p>
+        <p class="highlight">In <code>&lt;script setup&gt;</code>, imported components are locally registered automatically!</p>
+      </div>
+
+      <div class="demo-list">
+        <h3>Demo List (Using Local Component)</h3>
+        <ul>
+          <li v-for="item in items" :key="item.id">
+            {{ item.name }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>组件注册 (Component Registration)</h1>
+    <h1>{{ t('registration.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>Registration Types</h2>
+            <h2>{{ t('registration.types') }}</h2>
             <div class="card-content">
               <div class="info-box">
-                <h3>Global Registration</h3>
-                <p>Components registered globally can be used in the template of any component within the application.</p>
+                <h3>{{ t('registration.global') }}</h3>
+                <p>{{ t('registration.global_desc') }}</p>
               </div>
               
               <div class="info-box">
-                <h3>Local Registration</h3>
-                <p>Components registered locally are only available in the component where they are registered.</p>
-                <p class="highlight">In <code>&lt;script setup&gt;</code>, imported components are locally registered automatically!</p>
+                <h3>{{ t('registration.local') }}</h3>
+                <p>{{ t('registration.local_desc') }}</p>
+                <p class="highlight" v-html="t('registration.local_hint').replace('<script setup>', '<code>&lt;script setup&gt;</code>')"></p>
               </div>
 
               <div class="demo-list">
-                <h3>Demo List (Using Local Component)</h3>
+                <h3>{{ t('registration.demo_list') }}</h3>
                 <ul>
                   <li v-for="item in items" :key="item.id">
                     {{ item.name }}

@@ -2,7 +2,10 @@
 import AsyncChild from '../../components/demos/AsyncChild.vue'
 import LoadingComponent from '../../components/demos/LoadingComponent.vue'
 import { defineAsyncComponent } from 'vue'
+import { useI18n } from 'vue-i18n'
 import CodeComparison from '../../components/CodeComparison.vue'
+
+const { t } = useI18n()
 
 // Artificial delay component for Suspense
 const AsyncDependency = defineAsyncComponent({
@@ -13,16 +16,7 @@ const AsyncDependency = defineAsyncComponent({
   loadingComponent: LoadingComponent
 })
 
-const vue2Code = `<!-- Vue 2 (Manual Handling) -->
-<template>
-  <div>
-    <div v-if="loading">Loading...</div>
-    <div v-else-if="error">Error!</div>
-    <AsyncComponent v-else />
-  </div>
-</template>
-
-<script>
+const vue2Code = `<script>
 export default {
   data() {
     return {
@@ -42,8 +36,17 @@ export default {
 }
 <\/script>`
 
-const vue3Code = `<!-- Vue 3 (Suspense) -->
-<template>
+const vue2Template = `<template>
+  <div>
+    <div v-if="loading">Loading...</div>
+    <div v-else-if="error">Error!</div>
+    <AsyncComponent v-else />
+  </div>
+</template>`
+
+const vue3Code = `<!-- No special script needed for basic Suspense usage -->`
+
+const vue3Template = `<template>
   <Suspense>
     <!-- component with nested async dependencies -->
     <template #default>
@@ -60,17 +63,21 @@ const vue3Code = `<!-- Vue 3 (Suspense) -->
 
 <template>
   <div class="demo-container">
-    <h1>Suspense Demo</h1>
+    <h1>{{ t('suspense.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="vue2Template"
+      :vue3-template="vue3Template"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>Orchestrating Async Components</h2>
+            <h2>{{ t('suspense.orchestrating') }}</h2>
             <div class="card-content">
               <p class="description">
-                Suspense handles async dependencies in the component tree.
-                Reload the component to see the loading state again.
+                {{ t('suspense.desc') }}
               </p>
 
               <div class="suspense-wrapper">
@@ -82,7 +89,7 @@ const vue3Code = `<!-- Vue 3 (Suspense) -->
                   <template #fallback>
                     <div class="loading-state">
                       <LoadingComponent />
-                      <p>Waiting for async component...</p>
+                      <p>{{ t('suspense.waiting') }}</p>
                     </div>
                   </template>
                 </Suspense>

@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import CodeComparison from '../../components/CodeComparison.vue'
+
+const { t } = useI18n()
 
 const isActive = ref(true)
 const hasError = ref(false)
@@ -63,27 +66,84 @@ const styleObject = computed(() => ({
   fontSize: fontSize.value + 'px',
   fontWeight: 'bold'
 }))`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>Class Binding</h2>
+    <div class="card-content">
+      <div
+        class="demo-box"
+        :class="{ active: isActive, 'text-danger': hasError }"
+      >
+        Inline Object Binding
+      </div>
+      
+      <div class="demo-box" :class="classObject">
+        Computed Object Binding
+      </div>
+      
+      <div class="controls">
+        <button 
+          @click="isActive = !isActive" 
+          :class="{ active: isActive }"
+          class="toggle-btn"
+        >
+          Toggle Active
+        </button>
+        <button 
+          @click="hasError = !hasError" 
+          :class="{ danger: hasError }"
+          class="toggle-btn"
+        >
+          Toggle Error
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>Style Binding</h2>
+    <div class="card-content">
+      <div class="demo-box" :style="styleObject">
+        Bound Style
+      </div>
+      
+      <div class="controls">
+        <label>Color:</label>
+        <input type="color" v-model="activeColor" />
+        <label>Font Size:</label>
+        <input type="range" min="16" max="50" v-model="fontSize" />
+      </div>
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>类与样式绑定 (Class and Style Bindings)</h1>
+    <h1>{{ t('class_style.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>Class Binding</h2>
+            <h2>{{ t('class_style.class_binding') }}</h2>
             <div class="card-content">
               <div
                 class="demo-box"
                 :class="{ active: isActive, 'text-danger': hasError }"
               >
-                Inline Object Binding
+                {{ t('class_style.inline_object') }}
               </div>
               
               <div class="demo-box" :class="classObject">
-                Computed Object Binding
+                {{ t('class_style.computed_object') }}
               </div>
               
               <div class="controls">
@@ -92,40 +152,31 @@ const styleObject = computed(() => ({
                   :class="{ active: isActive }"
                   class="toggle-btn"
                 >
-                  Toggle Active
+                  {{ t('class_style.toggle_active') }}
                 </button>
                 <button 
                   @click="hasError = !hasError" 
                   :class="{ danger: hasError }"
                   class="toggle-btn"
                 >
-                  Toggle Error
+                  {{ t('class_style.toggle_error') }}
                 </button>
               </div>
             </div>
           </section>
 
           <section class="demo-card">
-            <h2>Style Binding</h2>
+            <h2>{{ t('class_style.style_binding') }}</h2>
             <div class="card-content">
-              <div class="demo-text" :style="{ color: activeColor, fontSize: fontSize + 'px' }">
-                Inline Style Text
+              <div class="demo-box" :style="styleObject">
+                {{ t('class_style.bound_style') }}
               </div>
               
-              <div class="demo-text" :style="styleObject">
-                Computed Style Text
-              </div>
-
-              <div class="style-controls">
-                <div class="control-group">
-                  <label>Color:</label>
-                  <input type="color" v-model="activeColor" />
-                  <span>{{ activeColor }}</span>
-                </div>
-                <div class="control-group">
-                  <label>Font Size: {{ fontSize }}px</label>
-                  <input type="range" min="12" max="60" v-model="fontSize" />
-                </div>
+              <div class="controls">
+                <label>Color:</label>
+                <input type="color" v-model="activeColor" />
+                <label>Font Size:</label>
+                <input type="range" min="16" max="50" v-model="fontSize" />
               </div>
             </div>
           </section>

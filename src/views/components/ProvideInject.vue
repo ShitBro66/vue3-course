@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref, provide } from 'vue'
+import { useI18n } from 'vue-i18n'
 import GrandChild from '../../components/demos/GrandChild.vue'
 import CodeComparison from '../../components/CodeComparison.vue'
+
+const { t } = useI18n()
 
 const count = ref(0)
 
@@ -35,29 +38,57 @@ const count = ref(0)
 
 provide('message', 'hello from ancestor')
 provide('count', count) // Passing a ref makes it reactive downstream!`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>Component Tree</h2>
+    <div class="card-content">
+      <div class="parent-box">
+        <div class="box-header">
+          <span class="role-badge">Parent (Provider)</span>
+          <div class="count-control">
+            <span>Count: {{ count }}</span>
+            <button @click="count++" class="action-btn">Increment</button>
+          </div>
+        </div>
+        
+        <div class="child-container">
+          <p class="connector">↓ passes data deeply ↓</p>
+          <GrandChild />
+        </div>
+      </div>
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>依赖注入 (Provide / Inject)</h1>
+    <h1>{{ t('provide_inject.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>Component Tree</h2>
+            <h2>{{ t('provide_inject.tree') }}</h2>
             <div class="card-content">
               <div class="parent-box">
                 <div class="box-header">
-                  <span class="role-badge">Parent (Provider)</span>
+                  <span class="role-badge">{{ t('provide_inject.parent') }}</span>
                   <div class="count-control">
-                    <span>Count: {{ count }}</span>
-                    <button @click="count++" class="action-btn">Increment</button>
+                    <span>{{ t('provide_inject.count') }} {{ count }}</span>
+                    <button @click="count++" class="action-btn">{{ t('provide_inject.increment') }}</button>
                   </div>
                 </div>
                 
                 <div class="child-container">
-                  <p class="connector">↓ passes data deeply ↓</p>
+                  <p class="connector">{{ t('provide_inject.passes') }}</p>
                   <GrandChild />
                 </div>
               </div>

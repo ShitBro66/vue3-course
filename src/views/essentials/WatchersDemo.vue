@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { ref, watch, watchEffect } from 'vue'
+import { useI18n } from 'vue-i18n'
 import CodeComparison from '../../components/CodeComparison.vue'
 
+const { t } = useI18n()
+
 const question = ref('')
-const answer = ref('Questions usually contain a question mark. ;-)')
+const answer = ref(t('watchers.default_answer'))
 const loading = ref(false)
 const answerImage = ref('')
 
@@ -11,7 +14,7 @@ const answerImage = ref('')
 watch(question, async (newQuestion) => {
   if (newQuestion.includes('?')) {
     loading.value = true
-    answer.value = 'Thinking...'
+    answer.value = t('watchers.thinking')
     answerImage.value = ''
     try {
       const res = await fetch('https://yesno.wtf/api')
@@ -19,12 +22,12 @@ watch(question, async (newQuestion) => {
       answer.value = data.answer.toUpperCase()
       answerImage.value = data.image
     } catch (error) {
-      answer.value = 'Error! Could not reach the API. ' + error
+      answer.value = t('watchers.error_api') + ' ' + error
     } finally {
       loading.value = false
     }
   } else {
-    answer.value = 'Questions usually contain a question mark. ;-)'
+    answer.value = t('watchers.default_answer')
     answerImage.value = ''
   }
 })
@@ -36,7 +39,7 @@ const log = ref('')
 
 watchEffect(() => {
   doubleCount.value = count.value * 2
-  log.value = `Side effect: Count is ${count.value}, Double is ${doubleCount.value}`
+  log.value = t('watchers.log_msg', { count: count.value, double: doubleCount.value })
 })
 
 const vue2Code = `export default {
@@ -103,10 +106,13 @@ watch(question, async (newQuestion) => {
       answer.value = data.answer.toUpperCase()
       answerImage.value = data.image
     } catch (error) {
-      answer.value = 'Error! ' + error
+      answer.value = 'Error! Could not reach the API. ' + error
     } finally {
       loading.value = false
     }
+  } else {
+    answer.value = 'Questions usually contain a question mark. ;-)'
+    answerImage.value = ''
   }
 })
 
@@ -118,21 +124,66 @@ watchEffect(() => {
   doubleCount.value = count.value * 2
   log.value = \`Side effect: Count is \${count.value}, Double is \${doubleCount.value}\`
 })`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>watch() - Async API</h2>
+    <div class="card-content">
+      <div class="input-group">
+        <label>Ask a yes/no question:</label>
+        <input v-model="question" :disabled="loading" class="custom-input" placeholder="e.g., Is Vue awesome?" />
+      </div>
+      
+      <div class="answer-box" :class="{ loading: loading }">
+        <p class="answer-text">{{ answer }}</p>
+        <img v-if="answerImage" :src="answerImage" class="answer-image" alt="Answer GIF" />
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>watchEffect() - Side Effects</h2>
+    <div class="card-content">
+      <div class="counter-display">
+        <div class="stat-item">
+          <span class="label">Count:</span>
+          <span class="value">{{ count }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="label">Double:</span>
+          <span class="value">{{ doubleCount }}</span>
+        </div>
+      </div>
+      
+      <button @click="count++" class="action-btn">Increment</button>
+      
+      <div class="log-box">
+        {{ log }}
+      </div>
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>侦听器 (Watchers)</h1>
+    <h1>{{ t('watchers.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>watch() - Async API</h2>
+            <h2>{{ t('watchers.async_api') }}</h2>
             <div class="card-content">
               <div class="input-group">
-                <label>Ask a yes/no question:</label>
-                <input v-model="question" :disabled="loading" class="custom-input" placeholder="e.g., Is Vue awesome?" />
+                <label>{{ t('watchers.ask_question') }}</label>
+                <input v-model="question" :disabled="loading" class="custom-input" :placeholder="t('watchers.placeholder')" />
               </div>
               
               <div class="answer-box" :class="{ loading: loading }">
@@ -143,20 +194,20 @@ watchEffect(() => {
           </section>
 
           <section class="demo-card">
-            <h2>watchEffect() - Side Effects</h2>
+            <h2>{{ t('watchers.side_effects') }}</h2>
             <div class="card-content">
               <div class="counter-display">
                 <div class="stat-item">
-                  <span class="label">Count:</span>
+                  <span class="label">{{ t('watchers.count') }}</span>
                   <span class="value">{{ count }}</span>
                 </div>
                 <div class="stat-item">
-                  <span class="label">Double:</span>
+                  <span class="label">{{ t('watchers.double') }}</span>
                   <span class="value">{{ doubleCount }}</span>
                 </div>
               </div>
               
-              <button @click="count++" class="action-btn">Increment</button>
+              <button @click="count++" class="action-btn">{{ t('watchers.increment') }}</button>
               
               <div class="log-box">
                 {{ log }}

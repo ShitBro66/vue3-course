@@ -1,30 +1,103 @@
 <script setup lang="ts">
 import { useCounterStore } from '../../stores/counter'
+import { useI18n } from 'vue-i18n'
+import CodeComparison from '../../components/CodeComparison.vue'
 
+const { t } = useI18n()
 const counter = useCounterStore()
+
+const vue2Code = `// Vuex Store (store.js)
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+  state: {
+    count: 0
+  },
+  getters: {
+    doubleCount: state => state.count * 2
+  },
+  mutations: {
+    increment(state) {
+      state.count++
+    }
+  }
+})
+
+// Usage in Component
+import { mapState, mapActions } from 'vuex'
+
+export default {
+  computed: {
+    ...mapState(['count']),
+    ...mapGetters(['doubleCount'])
+  },
+  methods: {
+    ...mapMutations(['increment'])
+  }
+}`
+
+const vue3Code = `// Pinia Store (stores/counter.js)
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+
+export const useCounterStore = defineStore('counter', () => {
+  const count = ref(0)
+  const doubleCount = computed(() => count.value * 2)
+  function increment() {
+    count.value++
+  }
+
+  return { count, doubleCount, increment }
+})
+
+// Usage in Component
+import { useCounterStore } from '@/stores/counter'
+const counter = useCounterStore()`
+
+const templateCode = `
+<div class="counter-box">
+  <p>Count: <strong>{{ counter.count }}</strong></p>
+  <p>Double: <strong>{{ counter.doubleCount }}</strong></p>
+  
+  <div class="actions">
+    <button @click="counter.increment">Increment</button>
+    <button @click="counter.reset">Reset</button>
+  </div>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>Pinia 状态管理 Demo</h1>
+    <h1>{{ t('pinia.title') }}</h1>
     
-    <div class="demo-content">
-      <p>这是一个使用 Pinia 管理状态的计数器示例。</p>
-      
-      <div class="counter-box">
-        <p>Count: <strong>{{ counter.count }}</strong></p>
-        <p>Double Count (Getter): <strong>{{ counter.doubleCount }}</strong></p>
-        
-        <div class="actions">
-          <button @click="counter.increment">Increment</button>
-          <button @click="counter.reset">Reset</button>
-        </div>
-      </div>
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue3-template="templateCode"
+    >
+      <template #demo>
+        <div class="demo-content">
+          <p>{{ t('pinia.intro') }}</p>
+          
+          <div class="counter-box">
+            <p>{{ t('pinia.count') }} <strong>{{ counter.count }}</strong></p>
+            <p>{{ t('pinia.double_count') }} <strong>{{ counter.doubleCount }}</strong></p>
+            
+            <div class="actions">
+              <button @click="counter.increment">{{ t('pinia.increment') }}</button>
+              <button @click="counter.reset">{{ t('pinia.reset') }}</button>
+            </div>
+          </div>
 
-      <div class="info">
-        <p>你可以尝试切换到其他页面再回来，你会发现状态是被保留的（除非刷新页面）。</p>
-      </div>
-    </div>
+          <div class="info">
+            <p>{{ t('pinia.persistence_hint') }}</p>
+          </div>
+        </div>
+      </template>
+    </CodeComparison>
   </div>
 </template>
 

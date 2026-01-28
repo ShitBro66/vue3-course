@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useMouse } from '../../composables/useMouse'
+import { useI18n } from 'vue-i18n'
 import CodeComparison from '../../components/CodeComparison.vue'
 
+const { t } = useI18n()
 const { x, y } = useMouse()
 
 const vue2Code = `// mouseMixin.js
@@ -53,31 +55,58 @@ export function useMouse() {
 // Usage
 import { useMouse } from './mouse'
 const { x, y } = useMouse()`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>Mouse Position Tracker</h2>
+    <div class="card-content centered">
+      <div class="tracker-box">
+        <div class="coordinate">
+          <span class="label">X:</span>
+          <span class="value">{{ x }}</span>
+        </div>
+        <div class="coordinate">
+          <span class="label">Y:</span>
+          <span class="value">{{ y }}</span>
+        </div>
+      </div>
+      <p class="description">
+        Move your mouse around to see the coordinates update.
+        This logic is reused via the <code>useMouse</code> composable.
+      </p>
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>组合式函数 (Composables)</h1>
+    <h1>{{ t('composables.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>Mouse Position Tracker</h2>
+            <h2>{{ t('composables.mouse_tracker') }}</h2>
             <div class="card-content centered">
               <div class="tracker-box">
                 <div class="coordinate">
-                  <span class="label">X:</span>
+                  <span class="label">{{ t('composables.x_pos') }}</span>
                   <span class="value">{{ x }}</span>
                 </div>
                 <div class="coordinate">
-                  <span class="label">Y:</span>
+                  <span class="label">{{ t('composables.y_pos') }}</span>
                   <span class="value">{{ y }}</span>
                 </div>
               </div>
               <p class="description">
-                Move your mouse around to see the coordinates update.
-                This logic is reused via the <code>useMouse</code> composable.
+                {{ t('composables.desc') }}
               </p>
             </div>
           </section>

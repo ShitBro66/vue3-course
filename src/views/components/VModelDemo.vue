@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import CustomInput from '../../components/demos/CustomInput.vue'
 import CodeComparison from '../../components/CodeComparison.vue'
+
+const { t } = useI18n()
 
 const message = ref('hello')
 
@@ -37,31 +40,56 @@ const vue3Code = `<!-- Parent -->
 defineProps(['modelValue'])
 defineEmits(['update:modelValue'])
 <\/script>`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>Two-way Binding</h2>
+    <div class="card-content centered">
+      <div class="input-group">
+        <label>Parent Message:</label>
+        <div class="value-display">{{ message }}</div>
+      </div>
+      
+      <div class="input-group">
+        <label>Custom Input (Child):</label>
+        <CustomInput v-model="message" />
+      </div>
+
+      <p class="note">
+        In Vue 3, <code>v-model</code> defaults to using <code>modelValue</code> prop and <code>update:modelValue</code> event.
+      </p>
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>v-model Demo</h1>
+    <h1>{{ t('vmodel.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>Two-way Binding</h2>
+            <h2>{{ t('vmodel.two_way_binding') }}</h2>
             <div class="card-content centered">
               <div class="input-group">
-                <label>Parent Message:</label>
+                <label>{{ t('vmodel.parent_message') }}</label>
                 <div class="value-display">{{ message }}</div>
               </div>
               
               <div class="input-group">
-                <label>Custom Input (Child):</label>
+                <label>{{ t('vmodel.custom_input') }}</label>
                 <CustomInput v-model="message" />
               </div>
 
-              <p class="note">
-                In Vue 3, <code>v-model</code> defaults to using <code>modelValue</code> prop and <code>update:modelValue</code> event.
-              </p>
+              <p class="note" v-html="t('vmodel.vue3_note').replace('modelValue', '<code>modelValue</code>').replace('update:modelValue', '<code>update:modelValue</code>')"></p>
             </div>
           </section>
         </div>

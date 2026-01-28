@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, reactive } from 'vue'
+import { useI18n } from 'vue-i18n'
 import CodeComparison from '../../components/CodeComparison.vue'
+
+const { t } = useI18n()
 
 // Shopping Cart Example
 const cart = reactive([
@@ -97,47 +100,70 @@ const fullName = computed({
     lastName.value = parts[parts.length - 1]
   }
 })`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>Basic Computed (Shopping Cart)</h2>
+    <div class="card-content">
+      <ul class="cart-list">
+        <li v-for="item in cart" :key="item.id">
+          {{ item.name }} - ${{ item.price }} x {{ item.quantity }}
+        </li>
+      </ul>
+      <p class="total">Total Price: ${{ totalPrice }}</p>
+      <button @click="addToCart" class="action-btn">Add Item</button>
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>Writable Computed</h2>
+    <div class="card-content">
+      <div class="form-group">
+        <label>Full Name:</label>
+        <input v-model="fullName" class="custom-input" />
+      </div>
+      <p class="preview">First Name: <strong>{{ firstName }}</strong></p>
+      <p class="preview">Last Name: <strong>{{ lastName }}</strong></p>
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>计算属性 (Computed Properties)</h1>
-
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <h1>{{ t('computed.title') }}</h1>
+    
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>购物车总价 (Read-only Computed)</h2>
+            <h2>{{ t('computed.shopping_cart') }}</h2>
             <div class="card-content">
               <ul class="cart-list">
                 <li v-for="item in cart" :key="item.id">
-                  <span>{{ item.name }}</span>
-                  <span class="price">\${{ item.price }} x {{ item.quantity }}</span>
+                  {{ item.name }} - ${{ item.price }} x {{ item.quantity }}
                 </li>
               </ul>
-              <div class="total-row">
-                <span>Total:</span>
-                <span class="total-price">\${{ totalPrice }}</span>
-              </div>
-              <button @click="addToCart" class="action-btn">Add Item</button>
+              <p class="total">{{ t('computed.total_price') }} ${{ totalPrice }}</p>
+              <button @click="addToCart" class="action-btn">{{ t('computed.add_item') }}</button>
             </div>
           </section>
 
           <section class="demo-card">
-            <h2>用户信息 (Writable Computed)</h2>
+            <h2>{{ t('computed.writable') }}</h2>
             <div class="card-content">
-              <div class="user-display">
-                <div class="avatar">{{ firstName[0] }}{{ lastName[0] }}</div>
-                <div class="user-info">
-                  <h3>{{ fullName }}</h3>
-                  <p class="text-muted">First: {{ firstName }} | Last: {{ lastName }}</p>
-                </div>
+              <div class="form-group">
+                <label>{{ t('computed.full_name') }}</label>
+                <input v-model="fullName" class="custom-input" />
               </div>
-              
-              <div class="input-group">
-                <label>Edit Full Name:</label>
-                <input v-model="fullName" class="custom-input" placeholder="Try editing me..." />
-              </div>
+              <p class="preview">First Name: <strong>{{ firstName }}</strong></p>
+              <p class="preview">Last Name: <strong>{{ lastName }}</strong></p>
             </div>
           </section>
         </div>

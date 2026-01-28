@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import CodeComparison from '../../components/CodeComparison.vue'
+
+const { t } = useI18n()
 
 const awesome = ref(true)
 const type = ref('A')
@@ -34,24 +37,76 @@ const showDetails = ref(true)
 const nextType = () => {
   type.value = type.value === 'A' ? 'B' : type.value === 'B' ? 'C' : 'A'
 }`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>v-if / v-else</h2>
+    <div class="card-content centered">
+      <div class="emoji-display">
+        <span v-if="awesome" class="bounce">🎉 Vue is Awesome!</span>
+        <span v-else class="shake">😢 Oh no</span>
+      </div>
+      <button @click="awesome = !awesome" class="action-btn">
+        Toggle Mood
+      </button>
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>v-else-if</h2>
+    <div class="card-content centered">
+      <div class="type-display">
+        <div v-if="type === 'A'" class="type-box type-a">Type A</div>
+        <div v-else-if="type === 'B'" class="type-box type-b">Type B</div>
+        <div v-else-if="type === 'C'" class="type-box type-c">Type C</div>
+        <div v-else>Not A/B/C</div>
+      </div>
+      <button @click="nextType" class="action-btn">
+        Cycle Type
+      </button>
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>v-show</h2>
+    <div class="card-content centered">
+      <div class="info-box">
+        <p>v-show toggles CSS display property.</p>
+        <div v-show="showDetails" class="details-panel">
+          <p>✨ These details are always in DOM!</p>
+          <small>Inspect element to verify.</small>
+        </div>
+      </div>
+      <button @click="showDetails = !showDetails" class="action-btn secondary">
+        {{ showDetails ? 'Hide' : 'Show' }} Details
+      </button>
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>条件渲染 (Conditional Rendering)</h1>
+    <h1>{{ t('conditional.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
             <h2>v-if / v-else</h2>
             <div class="card-content centered">
               <div class="emoji-display">
-                <span v-if="awesome" class="bounce">🎉 Vue is Awesome!</span>
-                <span v-else class="shake">😢 Oh no</span>
+                <span v-if="awesome" class="bounce">{{ t('conditional.awesome_text') }}</span>
+                <span v-else class="shake">{{ t('conditional.oh_no_text') }}</span>
               </div>
               <button @click="awesome = !awesome" class="action-btn">
-                Toggle Mood
+                {{ t('conditional.toggle_mood') }}
               </button>
             </div>
           </section>
@@ -60,13 +115,13 @@ const nextType = () => {
             <h2>v-else-if</h2>
             <div class="card-content centered">
               <div class="type-display">
-                <div v-if="type === 'A'" class="type-box type-a">Type A</div>
-                <div v-else-if="type === 'B'" class="type-box type-b">Type B</div>
-                <div v-else-if="type === 'C'" class="type-box type-c">Type C</div>
-                <div v-else>Not A/B/C</div>
+                <div v-if="type === 'A'" class="type-box type-a">{{ t('conditional.type_a') }}</div>
+                <div v-else-if="type === 'B'" class="type-box type-b">{{ t('conditional.type_b') }}</div>
+                <div v-else-if="type === 'C'" class="type-box type-c">{{ t('conditional.type_c') }}</div>
+                <div v-else>{{ t('conditional.not_type') }}</div>
               </div>
               <button @click="nextType" class="action-btn">
-                Cycle Type
+                {{ t('conditional.cycle_type') }}
               </button>
             </div>
           </section>
@@ -75,14 +130,14 @@ const nextType = () => {
             <h2>v-show</h2>
             <div class="card-content centered">
               <div class="info-box">
-                <p>v-show toggles CSS display property.</p>
+                <p>{{ t('conditional.v_show_desc') }}</p>
                 <div v-show="showDetails" class="details-panel">
-                  <p>✨ These details are always in DOM!</p>
-                  <small>Inspect element to verify.</small>
+                  <p>{{ t('conditional.always_in_dom') }}</p>
+                  <small>{{ t('conditional.inspect_verify') }}</small>
                 </div>
               </div>
               <button @click="showDetails = !showDetails" class="action-btn secondary">
-                {{ showDetails ? 'Hide' : 'Show' }} Details
+                {{ showDetails ? t('conditional.hide_details') : t('conditional.show_details') }}
               </button>
             </div>
           </section>

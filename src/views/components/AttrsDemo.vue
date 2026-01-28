@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import AttrButton from '../../components/demos/AttrButton.vue'
 import CodeComparison from '../../components/CodeComparison.vue'
+
+const { t } = useI18n()
 
 const onClick = () => {
   alert('Clicked!')
@@ -35,28 +38,47 @@ const vue3Code = `<!-- Parent -->
 // If the component has a single root element, fallthrough is automatic!
 // No need to manually bind $attrs unless you want to disable inheritance.
 <\/script>`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>Automatic Inheritance</h2>
+    <div class="card-content centered">
+      <p class="description">
+        The button below receives <code>class="large-btn"</code> and <code>@click</code> handler
+        from the parent, even though they are not defined as props.
+      </p>
+      
+      <AttrButton class="large-btn" @click="onClick" />
+      
+      <p class="note">
+        Inspect the button element to see the applied class.
+      </p>
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>透传 Attributes (Fallthrough Attributes)</h1>
+    <h1>{{ t('attrs.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>Automatic Inheritance</h2>
+            <h2>{{ t('attrs.auto_inheritance') }}</h2>
             <div class="card-content centered">
-              <p class="description">
-                The button below receives <code>class="large-btn"</code> and <code>@click</code> handler
-                from the parent, even though they are not defined as props.
-              </p>
+              <p class="description" v-html="t('attrs.desc').replace('class=&quot;large-btn&quot;', '<code>class=&quot;large-btn&quot;</code>').replace('@click', '<code>@click</code>')"></p>
               
               <AttrButton class="large-btn" @click="onClick" />
               
-              <p class="note">
-                Inspect the button element to see the applied class.
-              </p>
+              <p class="note">{{ t('attrs.note') }}</p>
             </div>
           </section>
         </div>

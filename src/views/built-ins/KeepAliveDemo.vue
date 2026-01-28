@@ -1,23 +1,14 @@
 <script setup lang="ts">
 import { shallowRef } from 'vue'
+import { useI18n } from 'vue-i18n'
 import CompA from '../../components/demos/CompA.vue'
 import CompB from '../../components/demos/CompB.vue'
 import CodeComparison from '../../components/CodeComparison.vue'
 
+const { t } = useI18n()
 const current = shallowRef(CompA)
 
-const vue2Code = `<template>
-  <div>
-    <label><input type="radio" v-model="current" :value="CompA" /> A</label>
-    <label><input type="radio" v-model="current" :value="CompB" /> B</label>
-    
-    <keep-alive>
-      <component :is="current"></component>
-    </keep-alive>
-  </div>
-</template>
-
-<script>
+const vue2Code = `<script>
 import CompA from './CompA.vue'
 import CompB from './CompB.vue'
 
@@ -39,8 +30,9 @@ import CompA from './CompA.vue'
 import CompB from './CompB.vue'
 
 const current = shallowRef(CompA)
-<\/script>
+<\/script>`
 
+const templateCode = `
 <template>
   <label><input type="radio" v-model="current" :value="CompA" /> A</label>
   <label><input type="radio" v-model="current" :value="CompB" /> B</label>
@@ -53,22 +45,27 @@ const current = shallowRef(CompA)
 
 <template>
   <div class="demo-container">
-    <h1>KeepAlive Demo</h1>
+    <h1>{{ t('keep_alive.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>Cached Components</h2>
+            <h2>{{ t('keep_alive.cached_components') }}</h2>
             <div class="card-content">
               <div class="controls">
                 <label class="radio-label">
                   <input type="radio" v-model="current" :value="CompA" /> 
-                  Component A
+                  {{ t('keep_alive.comp_a') }}
                 </label>
                 <label class="radio-label">
                   <input type="radio" v-model="current" :value="CompB" /> 
-                  Component B
+                  {{ t('keep_alive.comp_b') }}
                 </label>
               </div>
 
@@ -80,8 +77,7 @@ const current = shallowRef(CompA)
               
               <p class="hint">
                 <span class="icon">💡</span>
-                Switch between components. Type something in the input, then switch away and back. 
-                Notice the state is preserved!
+                {{ t('keep_alive.hint') }}
               </p>
             </div>
           </section>

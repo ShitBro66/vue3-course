@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import EventChild from '../../components/demos/EventChild.vue'
 import CodeComparison from '../../components/CodeComparison.vue'
+
+const { t } = useI18n()
 
 const count = ref(0)
 
@@ -31,22 +34,45 @@ const count = ref(0)
 function increaseCount(n: number) {
   count.value += n
 }`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>Counter Event</h2>
+    <div class="card-content centered">
+      <div class="count-circle">
+        {{ count }}
+      </div>
+      <p>Click buttons in children to emit events:</p>
+      
+      <div class="children-container">
+        <EventChild @increase-by="increaseCount" />
+        <EventChild @increase-by="increaseCount" />
+      </div>
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>事件 (Component Events)</h1>
+    <h1>{{ t('component_events.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>Counter Event</h2>
+            <h2>{{ t('component_events.counter_event') }}</h2>
             <div class="card-content centered">
               <div class="count-circle">
                 {{ count }}
               </div>
-              <p>Click buttons in children to emit events:</p>
+              <p>{{ t('component_events.click_hint') }}</p>
               
               <div class="children-container">
                 <EventChild @increase-by="increaseCount" />

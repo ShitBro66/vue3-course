@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import CodeComparison from '../../components/CodeComparison.vue'
 
+const { t } = useI18n()
 const open = ref(false)
 
 const vue2Code = `<!-- Vue 2 (No built-in Teleport) -->
@@ -11,11 +13,20 @@ const vue2Code = `<!-- Vue 2 (No built-in Teleport) -->
 </portal>
 
 <!-- Or manual DOM manipulation in mounted() hook -->
-mounted() {
-  document.body.appendChild(this.$el)
-}`
+<script>
+export default {
+  mounted() {
+    document.body.appendChild(this.$el)
+  }
+}
+<\/script>`
 
-const vue3Code = `<!-- Vue 3 (Built-in Teleport) -->
+const vue3Code = `<script setup>
+import { ref } from 'vue'
+const open = ref(false)
+<\/script>`
+
+const templateCode = `
 <button @click="open = true">Open Modal</button>
 
 <Teleport to="body">
@@ -28,27 +39,30 @@ const vue3Code = `<!-- Vue 3 (Built-in Teleport) -->
 
 <template>
   <div class="demo-container">
-    <h1>Teleport Demo</h1>
+    <h1>{{ t('teleport.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>Portal to Body</h2>
+            <h2>{{ t('teleport.to_body') }}</h2>
             <div class="card-content centered">
               <p class="description">
-                Clicking the button will render the modal as a direct child of <code>&lt;body&gt;</code>,
-                breaking out of the component's DOM hierarchy.
+                {{ t('teleport.desc') }}
               </p>
               
-              <button @click="open = true" class="action-btn">Open Modal</button>
+              <button @click="open = true" class="action-btn">{{ t('teleport.open_modal') }}</button>
 
               <Teleport to="body">
                 <div v-if="open" class="modal-overlay">
                   <div class="modal">
-                    <h3>I am a Teleported Modal!</h3>
-                    <p>My parent component is deep in the DOM tree, but I am rendered directly under body.</p>
-                    <button @click="open = false" class="close-btn">Close</button>
+                    <h3>{{ t('teleport.modal_title') }}</h3>
+                    <p>{{ t('teleport.modal_content') }}</p>
+                    <button @click="open = false" class="close-btn">{{ t('teleport.close') }}</button>
                   </div>
                 </div>
               </Teleport>

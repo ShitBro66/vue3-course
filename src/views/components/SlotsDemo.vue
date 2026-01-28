@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import FancyButton from '../../components/demos/FancyButton.vue'
 import CodeComparison from '../../components/CodeComparison.vue'
+
+const { t } = useI18n()
 
 const vue2Code = `export default {
   components: { FancyButton }
@@ -12,35 +15,68 @@ const vue2Code = `export default {
 
 const vue3Code = `import FancyButton from './FancyButton.vue'
 // Template usage same as Vue 2`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>Default Slot</h2>
+    <div class="card-content centered">
+      <FancyButton>
+        Click me!
+      </FancyButton>
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>Slot with Icon</h2>
+    <div class="card-content centered">
+      <FancyButton>
+        <span class="icon">🚀</span> Launch
+      </FancyButton>
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>Fallback Content</h2>
+    <div class="card-content centered">
+      <FancyButton /> 
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>插槽 (Slots) Demo</h1>
+    <h1>{{ t('slots.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>Default Slot</h2>
+            <h2>{{ t('slots.default') }}</h2>
             <div class="card-content centered">
               <FancyButton>
-                Click me!
+                {{ t('slots.click_me') }}
               </FancyButton>
             </div>
           </section>
 
           <section class="demo-card">
-            <h2>Slot with Icon</h2>
+            <h2>{{ t('slots.with_icon') }}</h2>
             <div class="card-content centered">
               <FancyButton>
-                <span class="icon">🚀</span> Launch
+                <span class="icon">🚀</span> {{ t('slots.launch') }}
               </FancyButton>
             </div>
           </section>
 
           <section class="demo-card">
-            <h2>Fallback Content</h2>
+            <h2>{{ t('slots.fallback') }}</h2>
             <div class="card-content centered">
               <FancyButton /> 
             </div>

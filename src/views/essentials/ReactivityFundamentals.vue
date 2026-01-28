@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, reactive, nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
 import CodeComparison from '../../components/CodeComparison.vue'
+
+const { t } = useI18n()
 
 // ref
 const count = ref(0)
@@ -82,43 +85,82 @@ const mutateDeeply = () => {
   obj.value.nested.count++
   obj.value.arr.push('baz')
 }`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>ref() Basic Counter</h2>
+    <div class="card-content">
+      <p class="count-display">{{ count }}</p>
+      <button @click="increment" class="action-btn">Increment Ref</button>
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>reactive() Object State</h2>
+    <div class="card-content">
+      <p class="count-display">{{ state.count }}</p>
+      <button @click="incrementReactive" class="action-btn secondary">Increment Reactive</button>
+    </div>
+  </section>
+
+  <section class="demo-card full-width">
+    <h2>Deep Reactivity</h2>
+    <div class="card-content">
+      <div class="info-row">
+        <span>Nested Count:</span>
+        <span class="highlight">{{ obj.nested.count }}</span>
+      </div>
+      <div class="info-row">
+        <span>Array:</span>
+        <span class="highlight">{{ obj.arr.join(', ') }}</span>
+      </div>
+      <button @click="mutateDeeply" class="action-btn accent">Mutate Deeply</button>
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>响应式基础 (Reactivity Fundamentals)</h1>
+    <h1>{{ t('reactivity.title') }}</h1>
     
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>ref() 基础计数器</h2>
+            <h2>{{ t('reactivity.ref_counter') }}</h2>
             <div class="card-content">
               <p class="count-display">{{ count }}</p>
-              <button @click="increment" class="action-btn">Increment Ref</button>
+              <button @click="increment" class="action-btn">{{ t('reactivity.increment_ref') }}</button>
             </div>
           </section>
 
           <section class="demo-card">
-            <h2>reactive() 对象状态</h2>
+            <h2>{{ t('reactivity.reactive_state') }}</h2>
             <div class="card-content">
               <p class="count-display">{{ state.count }}</p>
-              <button @click="incrementReactive" class="action-btn secondary">Increment Reactive</button>
+              <button @click="incrementReactive" class="action-btn secondary">{{ t('reactivity.increment_reactive') }}</button>
             </div>
           </section>
 
           <section class="demo-card full-width">
-            <h2>深层响应性 (Deep Reactivity)</h2>
+            <h2>{{ t('reactivity.deep_reactivity') }}</h2>
             <div class="card-content">
               <div class="info-row">
-                <span>Nested Count:</span>
+                <span>{{ t('reactivity.nested_count') }}</span>
                 <span class="highlight">{{ obj.nested.count }}</span>
               </div>
               <div class="info-row">
-                <span>Array:</span>
+                <span>{{ t('reactivity.array') }}</span>
                 <span class="highlight">{{ obj.arr.join(', ') }}</span>
               </div>
-              <button @click="mutateDeeply" class="action-btn accent">Mutate Deeply</button>
+              <button @click="mutateDeeply" class="action-btn accent">{{ t('reactivity.mutate_deeply') }}</button>
             </div>
           </section>
         </div>

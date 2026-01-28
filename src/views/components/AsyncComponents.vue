@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { defineAsyncComponent, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import LoadingComponent from '../../components/demos/LoadingComponent.vue'
 import ErrorComponent from '../../components/demos/ErrorComponent.vue'
 import CodeComparison from '../../components/CodeComparison.vue'
+
+const { t } = useI18n()
 
 const AsyncComp = defineAsyncComponent({
   loader: async () => {
@@ -42,25 +45,48 @@ const AsyncComp = defineAsyncComponent({
   errorComponent: ErrorComponent,
   timeout: 3000
 })`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>Lazy Loading Demo</h2>
+    <div class="card-content centered">
+      <p class="description">
+        Click the button to load the component asynchronously.
+        It has a 2-second artificial delay to show the loading state.
+      </p>
+      
+      <button @click="show = !show" class="action-btn">
+        {{ show ? 'Hide' : 'Show' }} Async Component
+      </button>
+      
+      <div class="component-wrapper">
+        <AsyncComp v-if="show" />
+      </div>
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>异步组件 (Async Components)</h1>
+    <h1>{{ t('async.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>Lazy Loading Demo</h2>
+            <h2>{{ t('async.lazy_demo') }}</h2>
             <div class="card-content centered">
-              <p class="description">
-                Click the button to load the component asynchronously.
-                It has a 2-second artificial delay to show the loading state.
-              </p>
+              <p class="description">{{ t('async.desc') }}</p>
               
               <button @click="show = !show" class="action-btn">
-                {{ show ? 'Hide' : 'Show' }} Async Component
+                {{ show ? t('async.hide') : t('async.show') }} {{ t('async.component') }}
               </button>
               
               <div class="component-wrapper">

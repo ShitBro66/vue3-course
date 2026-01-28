@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import CodeComparison from '../../components/CodeComparison.vue'
+
+const { t } = useI18n()
 
 const items = ref([
   { id: 1, message: 'Learn Vue 3', done: true },
@@ -91,26 +94,93 @@ const addItem = () => {
 const activeItems = computed(() => {
   return items.value.filter(item => !item.done)
 })`
+
+const templateCode = `
+<div class="demo-grid">
+  <section class="demo-card">
+    <h2>Todo List (v-for)</h2>
+    <div class="card-content">
+      <div class="add-item">
+        <input 
+          v-model="newItem" 
+          @keyup.enter="addItem"
+          placeholder="Add a new task..."
+          class="custom-input"
+        />
+        <button @click="addItem" class="action-btn">Add</button>
+      </div>
+      
+      <ul class="todo-list">
+        <li v-for="item in items" :key="item.id" :class="{ done: item.done }">
+          <label class="checkbox-label">
+            <input type="checkbox" v-model="item.done">
+            <span>{{ item.message }}</span>
+          </label>
+          <button @click="items = items.filter(i => i.id !== item.id)" class="delete-btn">×</button>
+        </li>
+      </ul>
+      
+      <div class="stats">
+        <span>{{ activeItems.length }} items left</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>Object Loop</h2>
+    <div class="card-content">
+      <div class="object-display">
+        <div v-for="(value, key, index) in myObject" :key="key" class="object-row">
+          <span class="key-badge">{{ index }}. {{ key }}</span>
+          <span class="value-text">{{ value }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-card">
+    <h2>Range Loop (Pagination UI)</h2>
+    <div class="card-content centered">
+      <div class="pagination">
+        <button class="page-btn">&lt;</button>
+        <button 
+          v-for="n in 5" 
+          :key="n" 
+          class="page-btn" 
+          :class="{ active: n === 1 }"
+        >
+          {{ n }}
+        </button>
+        <button class="page-btn">&gt;</button>
+      </div>
+    </div>
+  </section>
+</div>`
 </script>
 
 <template>
   <div class="demo-container">
-    <h1>列表渲染 (List Rendering)</h1>
+    <h1>{{ t('list.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="templateCode"
+      :vue3-template="templateCode"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>Todo List (v-for)</h2>
+            <h2>{{ t('list.todo_list') }}</h2>
             <div class="card-content">
               <div class="add-item">
                 <input 
                   v-model="newItem" 
                   @keyup.enter="addItem"
-                  placeholder="Add a new task..."
+                  :placeholder="t('list.add_placeholder')"
                   class="custom-input"
                 />
-                <button @click="addItem" class="action-btn">Add</button>
+                <button @click="addItem" class="action-btn">{{ t('list.add_btn') }}</button>
               </div>
               
               <ul class="todo-list">
@@ -124,13 +194,13 @@ const activeItems = computed(() => {
               </ul>
               
               <div class="stats">
-                <span>{{ activeItems.length }} items left</span>
+                <span>{{ activeItems.length }} {{ t('list.items_left') }}</span>
               </div>
             </div>
           </section>
 
           <section class="demo-card">
-            <h2>Object Loop</h2>
+            <h2>{{ t('list.object_loop') }}</h2>
             <div class="card-content">
               <div class="object-display">
                 <div v-for="(value, key, index) in myObject" :key="key" class="object-row">
@@ -142,7 +212,7 @@ const activeItems = computed(() => {
           </section>
 
           <section class="demo-card">
-            <h2>Range Loop (Pagination UI)</h2>
+            <h2>{{ t('list.range_loop') }}</h2>
             <div class="card-content centered">
               <div class="pagination">
                 <button class="page-btn">&lt;</button>

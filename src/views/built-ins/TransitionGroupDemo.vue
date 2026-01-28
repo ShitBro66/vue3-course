@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import CodeComparison from '../../components/CodeComparison.vue'
 
+const { t } = useI18n()
 const items = ref([1, 2, 3, 4, 5])
 const nextNum = ref(6)
 
@@ -17,7 +19,22 @@ function remove() {
   items.value.splice(randomIndex(), 1)
 }
 
-const vue2Code = `<transition-group name="list" tag="ul">
+const vue2Code = `<script>
+export default {
+  data() {
+    return {
+      items: [1, 2, 3, 4, 5],
+      nextNum: 6
+    }
+  },
+  methods: {
+    add() { ... },
+    remove() { ... }
+  }
+}
+<\/script>`
+
+const vue2Template = `<transition-group name="list" tag="ul">
   <li v-for="item in items" :key="item">
     {{ item }}
   </li>
@@ -30,11 +47,17 @@ const vue2Code = `<transition-group name="list" tag="ul">
   transform: translateY(30px);
 }
 .list-leave-active {
-  position: absolute; /* for smooth layout transition */
+  position: absolute;
 }
 </style>`
 
-const vue3Code = `<TransitionGroup name="list" tag="ul">
+const vue3Code = `<script setup>
+import { ref } from 'vue'
+const items = ref([1, 2, 3, 4, 5])
+// ... logic ...
+<\/script>`
+
+const vue3Template = `<TransitionGroup name="list" tag="ul">
   <li v-for="item in items" :key="item">
     {{ item }}
   </li>
@@ -54,17 +77,22 @@ const vue3Code = `<TransitionGroup name="list" tag="ul">
 
 <template>
   <div class="demo-container">
-    <h1>TransitionGroup Demo</h1>
+    <h1>{{ t('transition_group.title') }}</h1>
 
-    <CodeComparison :vue2-code="vue2Code" :vue3-code="vue3Code">
+    <CodeComparison 
+      :vue2-code="vue2Code" 
+      :vue3-code="vue3Code"
+      :vue2-template="vue2Template"
+      :vue3-template="vue3Template"
+    >
       <template #demo>
         <div class="demo-grid">
           <section class="demo-card">
-            <h2>List Transitions</h2>
+            <h2>{{ t('transition_group.list_transitions') }}</h2>
             <div class="card-content">
               <div class="controls">
-                <button @click="add" class="action-btn">Add Item</button>
-                <button @click="remove" class="action-btn secondary">Remove Item</button>
+                <button @click="add" class="action-btn">{{ t('transition_group.add_item') }}</button>
+                <button @click="remove" class="action-btn secondary">{{ t('transition_group.remove_item') }}</button>
               </div>
               
               <div class="list-container">
