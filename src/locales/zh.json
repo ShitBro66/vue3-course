@@ -1,0 +1,22 @@
+{
+  "common": {
+    "welcome": "欢迎来到 Vue 3 教学项目",
+    "desc": "这是一个包含官方文档所有主要概念 Demo 的教学项目。",
+    "check_sidebar": "请点击左侧菜单查看各个知识点的示例代码。",
+    "features": "项目包含：",
+    "core_concepts": "Vue 3 核心概念",
+    "components_depth": "组件深入",
+    "reusability": "逻辑复用 (Composables, Directives)",
+    "built_ins": "内置组件",
+    "ecosystem": "生态系统 (Vue Router, Pinia)",
+    "toggle_theme": "切换主题",
+    "language": "语言"
+  },
+  "menu": {
+    "essentials": "基础 (Essentials)",
+    "components_depth": "深入组件 (Components Depth)",
+    "reusability": "逻辑复用 (Reusability)",
+    "built_ins": "内置组件 (Built-ins)",
+    "ecosystem": "生态系统 (Ecosystem)"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "common": {
+    "welcome": "Welcome to Vue 3 Course",
+    "desc": "This project covers all main concepts from official docs.",
+    "check_sidebar": "Please check the sidebar for demos.",
+    "features": "Project Features:",
+    "core_concepts": "Core Concepts",
+    "components_depth": "Components Depth",
+    "reusability": "Reusability",
+    "built_ins": "Built-in Components",
+    "ecosystem": "Ecosystem",
+    "toggle_theme": "Toggle Theme",
+    "language": "Language"
+  },
+  "menu": {
+    "essentials": "Essentials",
+    "components_depth": "Components Depth",
+    "reusability": "Reusability",
+    "built_ins": "Built-ins",
+    "ecosystem": "Ecosystem"
+  }
+}
