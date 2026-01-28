@@ -108,10 +108,10 @@ const templateCode = `
     <div class="card-content">
       <ul class="cart-list">
         <li v-for="item in cart" :key="item.id">
-          {{ item.name }} - ${{ item.price }} x {{ item.quantity }}
+          {{ item.name }} - \${{ item.price }} x {{ item.quantity }}
         </li>
       </ul>
-      <p class="total">Total Price: ${{ totalPrice }}</p>
+      <p class="total">Total Price: \${{ totalPrice }}</p>
       <button @click="addToCart" class="action-btn">Add Item</button>
     </div>
   </section>
