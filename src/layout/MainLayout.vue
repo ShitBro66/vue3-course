@@ -15,55 +15,55 @@ const menuGroups = computed(() => [
   {
     title: t('menu.essentials'),
     items: [
-      { name: '模板语法', path: '/essentials/template-syntax' },
-      { name: '响应式基础', path: '/essentials/reactivity-fundamentals' },
-      { name: '计算属性', path: '/essentials/computed' },
-      { name: '类与样式绑定', path: '/essentials/class-and-style' },
-      { name: '条件渲染', path: '/essentials/conditional' },
-      { name: '列表渲染', path: '/essentials/list' },
-      { name: '事件处理', path: '/essentials/event-handling' },
-      { name: '表单输入绑定', path: '/essentials/form-input' },
-      { name: '生命周期', path: '/essentials/lifecycle' },
-      { name: '侦听器', path: '/essentials/watchers' },
-      { name: '模板引用', path: '/essentials/template-refs' },
-      { name: '组件基础', path: '/essentials/component-basics' },
+      { name: t('routes.template_syntax'), path: '/essentials/template-syntax' },
+      { name: t('routes.reactivity'), path: '/essentials/reactivity-fundamentals' },
+      { name: t('routes.computed'), path: '/essentials/computed' },
+      { name: t('routes.class_style'), path: '/essentials/class-and-style' },
+      { name: t('routes.conditional'), path: '/essentials/conditional' },
+      { name: t('routes.list'), path: '/essentials/list' },
+      { name: t('routes.events'), path: '/essentials/event-handling' },
+      { name: t('routes.form'), path: '/essentials/form-input' },
+      { name: t('routes.lifecycle'), path: '/essentials/lifecycle' },
+      { name: t('routes.watchers'), path: '/essentials/watchers' },
+      { name: t('routes.template_refs'), path: '/essentials/template-refs' },
+      { name: t('routes.component_basics'), path: '/essentials/component-basics' },
     ]
   },
   {
     title: t('menu.components_depth'),
     items: [
-      { name: '组件注册', path: '/components/registration' },
-      { name: 'Props', path: '/components/props' },
-      { name: '事件 (Emits)', path: '/components/events' },
-      { name: '组件 v-model', path: '/components/v-model' },
-      { name: '透传 Attributes', path: '/components/attrs' },
-      { name: '插槽 (Slots)', path: '/components/slots' },
-      { name: '依赖注入 (Provide/Inject)', path: '/components/provide-inject' },
-      { name: '异步组件', path: '/components/async' },
+      { name: t('routes.registration'), path: '/components/registration' },
+      { name: t('routes.props'), path: '/components/props' },
+      { name: t('routes.emits'), path: '/components/events' },
+      { name: t('routes.v_model'), path: '/components/v-model' },
+      { name: t('routes.attrs'), path: '/components/attrs' },
+      { name: t('routes.slots'), path: '/components/slots' },
+      { name: t('routes.provide_inject'), path: '/components/provide-inject' },
+      { name: t('routes.async_components'), path: '/components/async' },
     ]
   },
   {
     title: t('menu.reusability'),
     items: [
-      { name: '组合式函数 (Composables)', path: '/reusability/composables' },
-      { name: '自定义指令', path: '/reusability/custom-directives' },
-      { name: '插件 (Plugins)', path: '/reusability/plugins' },
+      { name: t('routes.composables'), path: '/reusability/composables' },
+      { name: t('routes.directives'), path: '/reusability/custom-directives' },
+      { name: t('routes.plugins'), path: '/reusability/plugins' },
     ]
   },
   {
     title: t('menu.built_ins'),
     items: [
-      { name: 'Transition', path: '/built-ins/transition' },
-      { name: 'TransitionGroup', path: '/built-ins/transition-group' },
-      { name: 'KeepAlive', path: '/built-ins/keep-alive' },
-      { name: 'Teleport', path: '/built-ins/teleport' },
-      { name: 'Suspense', path: '/built-ins/suspense' },
+      { name: t('routes.transition'), path: '/built-ins/transition' },
+      { name: t('routes.transition_group'), path: '/built-ins/transition-group' },
+      { name: t('routes.keep_alive'), path: '/built-ins/keep-alive' },
+      { name: t('routes.teleport'), path: '/built-ins/teleport' },
+      { name: t('routes.suspense'), path: '/built-ins/suspense' },
     ]
   },
   {
     title: t('menu.ecosystem'),
     items: [
-      { name: 'Pinia 状态管理', path: '/ecosystem/pinia' },
+      { name: t('routes.pinia'), path: '/ecosystem/pinia' },
     ]
   }
 ])
