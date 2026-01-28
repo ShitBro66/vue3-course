@@ -4,11 +4,10 @@ import LoadingComponent from '../../components/demos/LoadingComponent.vue'
 import ErrorComponent from '../../components/demos/ErrorComponent.vue'
 
 const AsyncComp = defineAsyncComponent({
-  loader: () => new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(import('../../components/demos/AsyncChild.vue'))
-    }, 2000)
-  }),
+  loader: async () => {
+    await new Promise(r => setTimeout(r, 2000))
+    return import('../../components/demos/AsyncChild.vue')
+  },
   loadingComponent: LoadingComponent,
   delay: 200,
   errorComponent: ErrorComponent,

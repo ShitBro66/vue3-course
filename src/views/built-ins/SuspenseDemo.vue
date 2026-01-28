@@ -6,11 +6,11 @@ import { defineAsyncComponent, ref } from 'vue'
 
 // Artificial delay component for Suspense
 const AsyncDependency = defineAsyncComponent({
-  loader: () => new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(import('../../components/demos/AsyncChild.vue'))
-    }, 2000)
-  })
+  loader: async () => {
+    await new Promise(r => setTimeout(r, 2000))
+    return import('../../components/demos/AsyncChild.vue')
+  },
+  loadingComponent: LoadingComponent
 })
 </script>
 

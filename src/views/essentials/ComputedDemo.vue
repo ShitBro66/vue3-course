@@ -24,8 +24,9 @@ const fullName = computed({
     return firstName.value + ' ' + lastName.value
   },
   set(newValue) {
-    // 注意：这里我们使用解构赋值语法
-    [firstName.value, lastName.value] = newValue.split(' ')
+    const parts = newValue.split(' ')
+    firstName.value = parts[0] ?? ''
+    lastName.value = parts[1] ?? ''
   }
 })
 </script>
